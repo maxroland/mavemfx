@@ -9,5 +9,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.datatools.connectivity.jdt.DRIVERLIBRARY/MySQL JDBC Driver"/>
+	<classpathentry kind="lib" path="C:/Users/SAP/.m2/repository/de/jensd/fontawesomefx/8.7/fontawesomefx-8.7.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

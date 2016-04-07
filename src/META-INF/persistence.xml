@@ -3,6 +3,9 @@
 		<class>br.com.sba.model.Funcionario</class>
 		<class>br.com.sba.model.Leitor</class>
 		<class>br.com.sba.model.Usuario</class>
+		<class>br.com.sba.model.Biblioteca</class>
+		<class>br.com.sba.model.Cargo</class>
+		<class>br.com.sba.model.Editora</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 			<property name="eclipselink.jdbc.batch-writing" value="JDBC"/>

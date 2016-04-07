@@ -17,9 +17,10 @@ import javafx.beans.property.StringProperty;
  */
 
 @Entity
-//@Table(name="usuario")
-//@NamedQuery(name="Usuario.findAll", query="SELECT u FROM Usuario f")
+@Table(name="usuario")
+@NamedQuery(name="Usuario.findByLogin", query="SELECT u FROM Usuario u WHERE u.login = :login ")
 public class Usuario{
+	public static final String FIND_BY_LOGIN = "Usuario.findByLogin";
 
 	private IntegerProperty idusuario =  new SimpleIntegerProperty();
 
