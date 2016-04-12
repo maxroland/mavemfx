@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.1" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="AppolodorusPU" transaction-type="RESOURCE_LOCAL">
+		<class>br.com.sba.model.Funcionario</class>
+		<class>br.com.sba.model.Leitor</class>
+		<class>br.com.sba.model.Usuario</class>
+		<class>br.com.sba.model.Biblioteca</class>
+		<class>br.com.sba.model.Cargo</class>
+		<class>br.com.sba.model.Editora</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<properties>
+			<property name="eclipselink.jdbc.batch-writing" value="JDBC"/>
+			<property name="eclipselink.jdbc.native-sql" value="true"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/appolodorus"/>
+			<property name="javax.persistence.jdbc.user" value="root"/>
+			<property name="javax.persistence.jdbc.password" value="root"/>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+			<property name="eclipselink.exclude-eclipselink-orm" value="false"/>
+		</properties>
+	</persistence-unit>
+</persistence>
