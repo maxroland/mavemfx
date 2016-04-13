@@ -3,9 +3,8 @@ package br.com.sba.view.app;
 
 import java.io.IOException;
 
-//import br.com.museuid.util.*;
-import br.com.sba.Login;
 import br.com.sba.AppolodorusApp;
+import br.com.sba.view.login.Login;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

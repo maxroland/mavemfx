@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import br.com.sba.Login;
 import br.com.sba.AppolodorusApp;
 import br.com.sba.facade.UsuarioFacade;
 import br.com.sba.model.Usuario;

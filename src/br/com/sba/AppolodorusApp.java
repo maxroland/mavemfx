@@ -45,7 +45,7 @@ public class AppolodorusApp extends Application{
 		stage.show();
 
 	}
-	
+	//Inicialização do programa pelo Login
 //	public static void main(String[] args) {
 //		launch(args);
 //	}

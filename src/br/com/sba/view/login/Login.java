@@ -1,4 +1,4 @@
-package br.com.sba;
+package br.com.sba.view.login;
 	
 import java.io.IOException;
 
