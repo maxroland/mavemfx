@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="resources"/>
-	<classpathentry kind="src" path="museuid"/>
+	<classpathentry excluding="museuid/br/com/museuid/app/|museuid/br/com/museuid/banco/controle/|museuid/br/com/museuid/banco/dao/|museuid/br/com/museuid/controller/|museuid/br/com/museuid/css/|museuid/br/com/museuid/font/|museuid/br/com/museuid/img/|museuid/br/com/museuid/img/dialog/|museuid/br/com/museuid/img/icon/|museuid/br/com/museuid/model/|museuid/br/com/museuid/util/|museuid/br/com/museuid/view/|museuid/br/com/museuid/view/app/|museuid/br/com/museuid/view/login/" kind="src" path="resources"/>
+	<classpathentry kind="src" path="others"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/eclipseLink">
