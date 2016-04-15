@@ -2,6 +2,7 @@ package br.com.sba.view.login;
 	
 import java.io.IOException;
 
+import br.com.sba.AppolodorusApp;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -9,8 +10,8 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.fxml.FXMLLoader;
 
-
-public class Login extends Application {
+//Classe específica de inicialização da aplicação
+public class LoginApp extends Application {
 	
     public static Stage palco;
     private static Scene cena;
@@ -18,11 +19,11 @@ public class Login extends Application {
 	
 	@Override
 	public void start(Stage stage) throws IOException{
-		palco = stage;
-        page = FXMLLoader.load(getClass().getResource("view/login/Login.fxml"));
+		palco=stage;
+        page = FXMLLoader.load(getClass().getResource("login.fxml"));//como arquivos no mesmo package informar apenas o nome do arquivo
         cena = new Scene(page);
 		//Icone no palco principal
-		stage.getIcons().add(new Image("br/com/sba/img/icon/library-icon.png"));
+		stage.getIcons().add(new Image("/br/com/sba/img/icon/library-icon.png"));
 		//Titulo do palco
 		stage.setTitle("SBA - Sistema de Bibliotecas Appolodorus");
 		//Desabilita alteração de tamanho da tela
@@ -37,4 +38,5 @@ public class Login extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
+	
 }

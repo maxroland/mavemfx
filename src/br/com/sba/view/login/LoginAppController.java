@@ -1,30 +1,26 @@
 package br.com.sba.view.login;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
-import javafx.stage.Stage;
-
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 import br.com.sba.AppolodorusApp;
 import br.com.sba.facade.UsuarioFacade;
 import br.com.sba.model.Usuario;
 import br.com.sba.util.StringUtils;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 
-public class LoginController{
+public class LoginAppController{
 	@FXML
 	private TextField pwdSenha;
 	@FXML
@@ -37,7 +33,6 @@ public class LoginController{
 	private Usuario currentUser;
 	
 	
-	// Event Listener on Button[#btnEntrar].onAction
 	@FXML
 	public void doLogin(ActionEvent event ) throws IOException{
 		currentUser = new Usuario(txtLogin.getText(), pwdSenha.getText());
@@ -46,13 +41,16 @@ public class LoginController{
 			currentUser =  usuarioFacade.isValidLogin(currentUser.getLogin(), currentUser.getSenha());
 				
 			if(currentUser != null){
-                new AppolodorusApp().start(new Stage());
-                Login.palco.close();
+				//Passa a responsabilidade do Palco pelo objeto Parent a classe Appolodorus
+				((Node) (event.getSource())).getScene().getWindow().hide();
+				Parent parent = FXMLLoader.load(getClass().getResource("/br/com/sba/view/app/app.fxml"));
+				new AppolodorusApp().startByParent(parent);			
 	        }
 			
 			lblErroLogin.setText("Login inválido!");
 		}
 	}
+
 	
 	public boolean validateInput(){
 		String errorMessage = validateForm();

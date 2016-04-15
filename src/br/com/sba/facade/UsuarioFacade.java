@@ -47,6 +47,7 @@ public class UsuarioFacade implements Serializable{
 		usuarioDAO.commitAndCloseTransaction();
 	}
 	
+	//regra de negócio
 	public Usuario isValidLogin(String login, String senha) {
 		usuarioDAO.beginTransaction();
 		Usuario usuario = usuarioDAO.findUserByLogin(login);

@@ -47,7 +47,7 @@
                                                             </toggleGroup>
                                                         </ToggleButton>
                                                         <ToggleButton fx:id="btDesginacao" alignment="CENTER_LEFT" layoutX="10.0" layoutY="50.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#subDesignacao" styleClass="submenus" text="Designação" toggleGroup="$grupoCatalogacao" />
-                                                        <ToggleButton fx:id="btEstratigrafia" alignment="CENTER_LEFT" layoutX="40.0" layoutY="40.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#subEstratigrafia" styleClass="submenus" text="Estratigrafia" toggleGroup="$grupoCatalogacao" />
+                                                        <ToggleButton fx:id="btEstratigrafia" alignment="CENTER_LEFT" layoutX="40.0" layoutY="40.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#subEstratigrafia" styleClass="submenus" text="Editora" toggleGroup="$grupoCatalogacao" />
                                                         <ToggleButton fx:id="btColecao" alignment="CENTER_LEFT" layoutX="40.0" layoutY="70.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#subColecao" styleClass="submenus" text="Coleção" toggleGroup="$grupoCatalogacao" />
                                                     </children>
                                                 </VBox>
@@ -76,7 +76,7 @@
                                                         <String fx:value="menu-relatorios" />
                                                     </styleClass>
                                                 </ToggleButton>
-                                                <ToggleButton fx:id="btIdentificacao" alignment="CENTER_LEFT" layoutX="10.0" layoutY="455.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#menuIdentificacao" text="Identificação" toggleGroup="$grupoMenus">
+                                                <ToggleButton fx:id="btIdentificacao" alignment="CENTER_LEFT" layoutX="10.0" layoutY="455.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#menuIdentificacao" text="Identificação" toggleGroup="$grupoMenus" visible="false">
                                                     <styleClass>
                                                         <String fx:value="menus" />
                                                         <String fx:value="menu-identificacao" />
@@ -94,7 +94,7 @@
                                                         <String fx:value="menu-movimentacao" />
                                                     </styleClass>
                                                 </ToggleButton>
-                                                <ToggleButton fx:id="btSeguranca" alignment="CENTER_LEFT" layoutX="10.0" layoutY="525.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#menuSeguranca" text="Validação" toggleGroup="$grupoMenus">
+                                                <ToggleButton fx:id="btSeguranca" alignment="CENTER_LEFT" layoutX="10.0" layoutY="525.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#menuSeguranca" text="Validação" toggleGroup="$grupoMenus" visible="false">
                                                     <styleClass>
                                                         <String fx:value="menus" />
                                                         <String fx:value="menu-seguranca" />

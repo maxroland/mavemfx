@@ -4,7 +4,7 @@ package br.com.sba.view.app;
 import java.io.IOException;
 
 import br.com.sba.AppolodorusApp;
-import br.com.sba.view.login.Login;
+import br.com.sba.view.login.LoginApp;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -258,7 +258,7 @@ public class AppController {
     @FXML
     void menuSair(ActionEvent event) throws IOException {
         AppolodorusApp.palco.close();
-        new Login().start(new Stage());
+        new LoginApp().start(new Stage());
     }
 
     @FXML

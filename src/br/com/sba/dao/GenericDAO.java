@@ -11,7 +11,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
-
+//Método genérico que utilizará uma classe DAO contendo o parâmetro da consulta que é detalhada na superclasse
 abstract class GenericDAO<T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 

@@ -8,7 +8,7 @@
 
 .box-logo {
     -fx-alignment: center;
-    -fx-max-height: 200px;
+    -fx-max-height: 500px;
     -fx-min-height: 70px;
     -fx-cursor: hand;
 }
