@@ -20,7 +20,7 @@ public class LoginApp extends Application {
 	@Override
 	public void start(Stage stage) throws IOException{
 		palco=stage;
-        page = FXMLLoader.load(getClass().getResource("login.fxml"));//como arquivos no mesmo package informar apenas o nome do arquivo
+        page = FXMLLoader.load(getClass().getResource("loginapp.fxml"));//como arquivos no mesmo package informar apenas o nome do arquivo
         cena = new Scene(page);
 		//Icone no palco principal
 		stage.getIcons().add(new Image("/br/com/sba/img/icon/library-icon.png"));

@@ -32,8 +32,6 @@ public class Usuario{
 
 	private StringProperty endereco = new SimpleStringProperty();
 
-	private StringProperty estado = new SimpleStringProperty();
-
 	private StringProperty login = new SimpleStringProperty();
 
 	private StringProperty nome = new SimpleStringProperty();
@@ -44,26 +42,19 @@ public class Usuario{
 
 	public Usuario() {
 	}
-
 		
-	public Usuario(int idusuario) {
-		this.idusuario = new SimpleIntegerProperty(idusuario);
-	}
-
 	public Usuario(String login, String senha) {
 		this.login = new SimpleStringProperty(login);
 		this.senha = new SimpleStringProperty(senha);
 	}
 
-
 	public Usuario(int idusuario, String cep, String cpf, String email, String endereco, 
-			String estado, String login, String nome, String senha, int tipousuario) {
+				   String estado, String login, String nome, String senha, int tipousuario) {
 		this.idusuario = new SimpleIntegerProperty(idusuario);
 		this.cep = new SimpleStringProperty(cep);
 		this.cpf = new SimpleStringProperty(cpf);
 		this.email = new SimpleStringProperty(email);
 		this.endereco = new SimpleStringProperty(endereco);
-		this.estado = new SimpleStringProperty(estado);
 		this.login = new SimpleStringProperty(login);
 		this.nome = new SimpleStringProperty(nome);
 		this.senha = new SimpleStringProperty(senha);
@@ -144,21 +135,6 @@ public class Usuario{
 
 	public void setEndereco(final String endereco) {
 		this.enderecoProperty().set(endereco);
-	}
-	
-
-	public StringProperty estadoProperty() {
-		return this.estado;
-	}
-	
-
-	public String getEstado() {
-		return this.estadoProperty().get();
-	}
-	
-
-	public void setEstado(final String estado) {
-		this.estadoProperty().set(estado);
 	}
 	
 
@@ -250,6 +226,13 @@ public class Usuario{
 		} else if (!idusuario.equals(other.idusuario))
 			return false;
 		return true;
-	}		
+	}
+
+	@Override
+	public String toString() {
+		return loginProperty().get();
+	}
+	
+	
 	
 }

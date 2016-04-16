@@ -2,13 +2,19 @@ package br.com.sba.view.app;
 
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
+import br.com.sba.util.Animacao;
+import br.com.sba.util.Modulo;
 import br.com.sba.AppolodorusApp;
 import br.com.sba.view.login.LoginApp;
+import br.com.sba.view.login.LoginAppController;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
@@ -19,9 +25,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class AppController {
+public class AppController implements Initializable{
 
-    private static AppController instance;
+    //private static AppController instance;
 
     @FXML
     private AnchorPane boxConteudo;
@@ -110,10 +116,14 @@ public class AppController {
     /**
      * Obter instancia do controler
      */
-    public static AppController getInstance() {
-        return instance;
-    }
+//    public static AppController getInstance() {
+//        return instance;
+//    }
 
+    public void setDataPane(Node node) {
+        // Atualiza AnchorPane form(FXML) dependendo do submenu escolhido
+        boxConteudo.getChildren().setAll(node);
+    }
 
     @FXML
     void menuDashboard(MouseEvent event) {
@@ -246,8 +256,8 @@ public class AppController {
     }
 
     @FXML
-    void subUsuarios(ActionEvent event) {
-//        //Modulo.getUsuario(boxConteudo);
+    void subUsuarios(ActionEvent event) throws IOException {
+        Modulo.getUsuario(boxConteudo);
     }
 
     @FXML
@@ -261,13 +271,13 @@ public class AppController {
         new LoginApp().start(new Stage());
     }
 
-    @FXML
-    void initialize() {
-        instance = this;
- //       Grupo.notEmpty(grupoMenus, grupoCatalogacao, grupoEmprestimo, grupoLocaliacao, grupoUtilidades, grupoVisitantes);//não permite grupos de menus com menus deselecionados
-        menuDashboard(null);
-        //lbUser.setText("Olá, " + LoginController.usuarioLogado.getNome());
-    }
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+//        instance = this;
+//        Grupo.notEmpty(grupoMenus, grupoCatalogacao, grupoEmprestimo, grupoLocaliacao, grupoUtilidades, grupoVisitantes);//não permite grupos de menus com menus deselecionados
+//        menuDashboard(null);
+        //lbUser.setText("Ol�, " + LoginAppController.currentUser.getLogin());
+	}
     public AnchorPane fadeAnimate(String url) throws IOException {
         AnchorPane v = (AnchorPane) FXMLLoader.load(getClass().getResource(url));
         FadeTransition ft = new FadeTransition(Duration.millis(1500));
@@ -299,7 +309,7 @@ public class AppController {
     public void submenus(ToggleButton menu, VBox box, ToggleButton... submenus) {
         if (box.getChildren().isEmpty()) {
             box.getChildren().addAll(submenus);
- //           Animacao.fade(box);
+            Animacao.fade(box);
             estilo(menu, "menu-grupo");
         } else {
             desativarSubmenus(box);
@@ -323,5 +333,7 @@ public class AppController {
         no.getStyleClass().remove(3);
         no.getStyleClass().add(estilo);
     }
+
+
 
 }

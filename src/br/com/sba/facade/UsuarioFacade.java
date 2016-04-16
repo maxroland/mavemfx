@@ -21,7 +21,12 @@ public class UsuarioFacade implements Serializable{
 		usuarioDAO.beginTransaction();
 		Usuario persistedUsuario = usuarioDAO.find(usuario.getIdusuario());
 		persistedUsuario.setNome(usuario.getNome());
-		//outros campos a atualizar
+		persistedUsuario.setEndereco(usuario.getEndereco());
+		persistedUsuario.setCep(usuario.getCep());
+		persistedUsuario.setEmail(usuario.getEmail());
+		persistedUsuario.setSenha(usuario.getSenha());
+		persistedUsuario.setCpf(usuario.getCpf());
+		persistedUsuario.setTipousuario(usuario.getTipousuario());
 		usuarioDAO.update(persistedUsuario);
 		usuarioDAO.commitAndCloseTransaction();
 	}
@@ -47,7 +52,6 @@ public class UsuarioFacade implements Serializable{
 		usuarioDAO.commitAndCloseTransaction();
 	}
 	
-	//regra de negócio
 	public Usuario isValidLogin(String login, String senha) {
 		usuarioDAO.beginTransaction();
 		Usuario usuario = usuarioDAO.findUserByLogin(login);
