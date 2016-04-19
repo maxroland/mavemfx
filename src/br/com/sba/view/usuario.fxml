@@ -125,10 +125,10 @@
                   <String fx:value="lb-info-requerido" />
                </styleClass>
             </Label>
-            <TextField fx:id="txtEmail1" prefHeight="35.0" prefWidth="182.0" styleClass="campo-texto" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+            <TextField fx:id="txtEndereco" prefHeight="35.0" prefWidth="182.0" styleClass="campo-texto" GridPane.columnSpan="2" GridPane.rowIndex="5" />
             <TextField fx:id="txtCep" prefHeight="35.0" prefWidth="182.0" styleClass="campo-texto" GridPane.columnIndex="2" GridPane.rowIndex="5" />
             <TextField fx:id="txtCpf" prefHeight="35.0" prefWidth="182.0" styleClass="campo-texto" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <TextField fx:id="txtTipoUsuario" prefHeight="35.0" prefWidth="182.0" styleClass="campo-texto" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <ComboBox fx:id="cbTipoUsuario" prefHeight="34.0" prefWidth="464.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
             </children>
         </GridPane>
         <AnchorPane fx:id="telaEdicao" visible="false" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
@@ -136,12 +136,11 @@
                 <TableView fx:id="tbUsuario" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="10.0">
                     <columns>
                         <TableColumn fx:id="colId" maxWidth="100.0" minWidth="50.0" prefWidth="50.0" text="Id" />
+                        <TableColumn fx:id="colLogin" maxWidth="500.0" minWidth="150.0" prefWidth="180.0" text="Login" />                        
                         <TableColumn fx:id="colNome" maxWidth="500.0" minWidth="150.0" prefWidth="200.0" text="Nome" />
-                        <TableColumn fx:id="colLogin" maxWidth="500.0" minWidth="150.0" prefWidth="180.0" text="Login" />
+                        <TableColumn fx:id="colTipo" maxWidth="500.0" minWidth="150.0" prefWidth="50.0" text="Tipo" />
                         <TableColumn fx:id="colEmail" maxWidth="500.0" minWidth="150.0" prefWidth="240.0" text="Email" />
-                        <TableColumn fx:id="colTipoUsuario" maxWidth="200.0" minWidth="100.0" prefWidth="100.0" text="Tipo Usuário" />
                         <TableColumn fx:id="colEndereco" maxWidth="418.0" minWidth="150.0" prefWidth="337.0" text="Endereço" />
-                        <TableColumn fx:id="colCep" maxWidth="900.0" minWidth="32.0" prefWidth="113.0" text="CEP" />
                     </columns>
                     <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

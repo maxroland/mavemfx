@@ -26,7 +26,7 @@ public class UsuarioFacade implements Serializable{
 		persistedUsuario.setEmail(usuario.getEmail());
 		persistedUsuario.setSenha(usuario.getSenha());
 		persistedUsuario.setCpf(usuario.getCpf());
-		persistedUsuario.setTipousuario(usuario.getTipousuario());
+		persistedUsuario.setTipo(usuario.getTipo());
 		usuarioDAO.update(persistedUsuario);
 		usuarioDAO.commitAndCloseTransaction();
 	}
@@ -61,5 +61,14 @@ public class UsuarioFacade implements Serializable{
 		}
 
 		return usuario;
+	}
+	
+	public boolean hasLogin(String login){
+		usuarioDAO.beginTransaction();
+		Usuario usuario = usuarioDAO.findUserByLogin(login);
+		if(usuario.getLogin().equals(login) ){
+			return true;
+		}
+		return false;
 	}
 }

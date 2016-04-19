@@ -24,7 +24,7 @@ public class Nota {
     private static void nota(VBox box, String mensagem, String tipo) {
 
         HBox nota = new HBox(label(mensagem, tipo));
-        nota.getStylesheets().add("br/com/museuid/css/dialog.css");
+        nota.getStylesheets().add("/br/com/sba/css/dialog.css");
 
         nota.getChildren().add(close(box, nota));
         nota.getStyleClass().add("box-nota");

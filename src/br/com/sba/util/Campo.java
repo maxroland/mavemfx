@@ -1,7 +1,9 @@
 package br.com.sba.util;
 
 import javafx.scene.Node;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -90,4 +92,17 @@ public class Campo {
             no.setStyle("-fx-border-color: transparent transparent #e8e8e8 transparent;");
         });
     }
+
+	public static boolean noEmpty(ComboBox<String>... field) {
+        boolean vazio = false;
+
+        for (ComboBox<String> campo : field ) {
+            if (campo.getValue().trim().isEmpty()) {
+                erro(campo, "Verificar valor vazio!");
+                vazio = true;
+            }
+        }
+
+        return vazio;
+	}
 }

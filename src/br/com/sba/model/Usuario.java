@@ -1,8 +1,11 @@
 package br.com.sba.model;
 
-//import java.io.Serializable;
-import javax.persistence.*;
-
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -37,8 +40,8 @@ public class Usuario{
 	private StringProperty nome = new SimpleStringProperty();
 
 	private StringProperty senha = new SimpleStringProperty();
-
-	private IntegerProperty tipousuario = new SimpleIntegerProperty();
+	
+	private StringProperty tipo = new SimpleStringProperty();
 
 	public Usuario() {
 	}
@@ -48,8 +51,9 @@ public class Usuario{
 		this.senha = new SimpleStringProperty(senha);
 	}
 
-	public Usuario(int idusuario, String cep, String cpf, String email, String endereco, 
-				   String estado, String login, String nome, String senha, int tipousuario) {
+	public Usuario(int idusuario,String nome,String cpf, 
+				   String email,String login,String senha,
+				   String endereco,String cep,String tipo) {
 		this.idusuario = new SimpleIntegerProperty(idusuario);
 		this.cep = new SimpleStringProperty(cep);
 		this.cpf = new SimpleStringProperty(cpf);
@@ -58,7 +62,7 @@ public class Usuario{
 		this.login = new SimpleStringProperty(login);
 		this.nome = new SimpleStringProperty(nome);
 		this.senha = new SimpleStringProperty(senha);
-		this.tipousuario = new SimpleIntegerProperty(tipousuario);
+		this.tipo = new SimpleStringProperty(tipo);
 	}
 
 
@@ -67,7 +71,7 @@ public class Usuario{
 	}
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	public int getIdusuario() {
 		return this.idusuarioProperty().get();
 	}
@@ -182,19 +186,25 @@ public class Usuario{
 		this.senhaProperty().set(senha);
 	}
 	
+	
+	public StringProperty tipoProperty() {
+		return this.tipo;
+	}
 
-	public IntegerProperty tipousuarioProperty() {
-		return this.tipousuario;
+//	@ObjectTypeConverter(name = "tipo", objectType = TipoUsuario.class, dataType = String.class, conversionValues = {
+//			@ConversionValue(objectValue = "Administrador", dataValue = "0"),
+//			@ConversionValue(objectValue = "Leitor", dataValue = "1") })	
+//	@Basic
+//	@Convert("tipo")
+//	@Enumerated(EnumType.ORDINAL)
+	public String getTipo() {
+		return this.tipoProperty().get();
 	}
 	
-	public int getTipousuario() {
-		return this.tipousuarioProperty().get();
-	}
-	
 
-	public void setTipousuario(final int tipousuario) {
-		this.tipousuarioProperty().set(tipousuario);
-	}	
+	public void setTipo(final String tipo) {
+		this.tipoProperty().set(tipo);
+	}
 
 	
 	/**
@@ -232,6 +242,18 @@ public class Usuario{
 	public String toString() {
 		return loginProperty().get();
 	}
+
+
+	
+
+
+
+
+	
+
+
+
+
 	
 	
 	

@@ -9,11 +9,13 @@ import javax.persistence.NoResultException;
 
 
 import br.com.sba.facade.UsuarioFacade;
+import br.com.sba.model.TipoUsuario;
 //import br.com.museuid.banco.controle.ControleDAO;
 //import br.com.museuid.model.TipoUsuario;
 import br.com.sba.model.Usuario;
 import br.com.sba.util.Campo;
 import br.com.sba.util.Combo;
+import br.com.sba.util.Criptografia;
 import br.com.sba.util.Dialogo;
 import br.com.sba.util.Filtro;
 import br.com.sba.util.Grupo;
@@ -84,7 +86,7 @@ public class UsuarioController extends AnchorPane{
     private ComboBox<?> cbPermissaoUsuario;
 
     @FXML
-    private TextField txtEmail1;
+    private TextField txtEndereco;
 
     @FXML
     private TextField txtCep;
@@ -93,7 +95,7 @@ public class UsuarioController extends AnchorPane{
     private TextField txtCpf;
 
     @FXML
-    private TextField txtTipoUsuario;
+    private ComboBox<String> cbTipoUsuario;
 
     @FXML
     private AnchorPane telaEdicao;
@@ -114,7 +116,7 @@ public class UsuarioController extends AnchorPane{
     private TableColumn<Usuario, String> colEmail;
 
     @FXML
-    private TableColumn<Usuario, Number> colTipoUsuario;
+    private TableColumn<Usuario, String> colTipo;
 
     @FXML
     private TableColumn<Usuario, String> colEndereco;
@@ -134,19 +136,19 @@ public class UsuarioController extends AnchorPane{
     @FXML
     private Label legenda;
     
-    public UsuarioController() {
-        try {
+    public UsuarioController() throws IOException{
+       // try {
             FXMLLoader fxml = new FXMLLoader(getClass().getResource("/br/com/sba/view/usuario.fxml"));
 
             fxml.setRoot(this);
             fxml.setController(this);
             fxml.load();
 
-        }
-        catch (IOException ex) {
-            Mensagem.erro("Erro ao carregar tela do usuário! \n" + ex); 
-
-        }
+//        }
+//        catch (IOException ex) {
+//            Mensagem.erro("Erro ao carregar tela do usuário! \n" + ex); 
+//
+//        }
     }
     
     @FXML
@@ -173,6 +175,7 @@ public class UsuarioController extends AnchorPane{
     void telaEdicao(ActionEvent event) {
         config("Editar Usuário", "Quantidade de usuários encontrados", 1);
         Modulo.visualizacao(true, telaEdicao, btEditar, txtPesquisar);
+        sincronizarBase();
         tabela();
     }
 
@@ -186,39 +189,38 @@ public class UsuarioController extends AnchorPane{
     @FXML
     void salvar(ActionEvent event) {
 
-//        boolean vazio = Campo.noEmpty(txtNome, txtLogin, txtSenha, txtConfirmarSenha);
-//
-//        String nome = txtNome.getText();
-//        String login = txtLogin.getText().replaceAll(" ", "").trim();
-//        String email = txtEmail.getText();
-//        String confirmar = txtConfirmarSenha.getText();
-//        String senha = txtSenha.getText();
-//        String descricao = txtDescricao.getText();
-//        boolean status = cbStatus.getValue().equals("Ativo");
-//        TipoUsuario tipo = cbPermissaoUsuario.getValue();
-//
-//        if (vazio) {
-//            Nota.alerta("Preencher campos vazios!");
-//        } else if (cbPermissaoUsuario.getValue() == null) {
-//            Nota.alerta("Permissão do Usuário não encontrada!");
+        boolean vazio = Campo.noEmpty(txtNome, txtLogin, txtSenha, txtConfirmarSenha);
+        resetUsuario();
+        usuario.setNome(txtNome.getText());
+        usuario.setCpf(txtCpf.getText());
+        usuario.setEmail(txtEmail.getText());
+        usuario.setLogin(txtLogin.getText().replaceAll(" ", "").trim());
+        String confirmar = txtConfirmarSenha.getText();
+        String senha = txtSenha.getText();
+        usuario.setEndereco(txtEndereco.getText());
+        usuario.setCep(txtCep.getText());
+        usuario.setTipo(cbTipoUsuario.getValue());
+        if (vazio ) {
+           Mensagem.info("Preencher campos vazios!");
 //        } else if (!senha.equals(confirmar)) {
-//            Nota.alerta("Senha inválida, verifique se senhas são iguais!");
-//        } else if (ControleDAO.getBanco().getUsuarioDAO().isUsuario(idUsuario, login)) {
+//            Mensagem.info("Senha inválida, verifique se senhas são iguais!");
+//        } else if (usuarioFacade.hasLogin(usuario.getLogin())) {
 //            Nota.alerta("Login já cadastrado na base de dados!");
-//        } else {
-//            Usuario user = new Usuario(idUsuario, nome, login, Criptografia.converter(senha), email, status, null, descricao, tipo);
-//
-//            if (idUsuario == 0) {
-//                ControleDAO.getBanco().getUsuarioDAO().inserir(user);
-//                Mensagem.info("Usuário cadastrado com sucesso!");
-//            } else {
-//                ControleDAO.getBanco().getUsuarioDAO().editar(user);
-//                Mensagem.info("Usuário atualizado com sucesso!");
-//            }
-//
-//            telaCadastro(null);
-//            sincronizarBase();
-//        }
+        } else {
+            Usuario user = new Usuario(idUsuario, usuario.getNome(), usuario.getCpf(),usuario.getEmail(),usuario.getLogin(), senha,//Criptografia.converter(senha), 
+            							usuario.getEndereco(), usuario.getCep(),usuario.getTipo());
+
+            if (idUsuario == 0) {
+                usuarioFacade.createUsuario(user);
+                Mensagem.info("Usuário cadastrado com sucesso!");
+            } else {
+                usuarioFacade.updateUsuario(user);
+                Mensagem.info("Usuário atualizado com sucesso!");
+            }
+            resetUsuario();
+            telaCadastro(null);
+            sincronizarBase();
+        }
     }
 
     @FXML
@@ -230,9 +232,12 @@ public class UsuarioController extends AnchorPane{
             telaCadastro(null);
 
             txtNome.setText(user.getNome());
+            txtCpf.setText(user.getCpf());
             txtLogin.setText(user.getLogin());
             txtEmail.setText(user.getEmail());
             txtSenha.setText("");
+            txtEndereco.setText(user.getEndereco());
+            cbTipoUsuario.setValue(user.getTipo());
             txtConfirmarSenha.setText("");
             lbTitulo.setText("Editar Usuário");
             menu.selectToggle(menu.getToggles().get(1));
@@ -252,8 +257,7 @@ public class UsuarioController extends AnchorPane{
             Dialogo.Resposta response = Mensagem.confirmar("Excluir usuário " + usuario.getNome() + " ?");
 
             if (response == Dialogo.Resposta.YES) {
-                //ControleDAO.getBanco().getUsuarioDAO().excluir(usuario.getId());
-            	
+            	getUsuarioFacade().deleteUsuario(usuario);
                 sincronizarBase();
                 tabela();
             }
@@ -272,6 +276,7 @@ public class UsuarioController extends AnchorPane{
      */
     private void combos() {
         Combo.popular(cbStatus, "Ativo", "Inativo");
+        Combo.popular(cbTipoUsuario, "Administrador", "Leitor");
 //        Combo.popular(cbPermissaoUsuario, ControleDAO.getBanco().getUsuarioDAO().usuariosTipo());
     }
 
@@ -293,7 +298,7 @@ public class UsuarioController extends AnchorPane{
      * Sincronizar dados com banco de dados
      */
     private void sincronizarBase() {
-        getAllUsuarios();//ControleDAO.getBanco().getUsuarioDAO().listar();
+        getAllUsuarios();
     }
 
     /**
@@ -303,20 +308,23 @@ public class UsuarioController extends AnchorPane{
 
         ObservableList<Usuario> data = FXCollections.observableArrayList(listaUsuarios);
 
-        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colId.setCellValueFactory(new PropertyValueFactory<>("idusuario"));
         colLogin.setCellValueFactory(new PropertyValueFactory<>("login"));
         colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        //colTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
+        colTipo.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Usuario, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Usuario, String> obj) {
+                return new SimpleStringProperty(obj.getValue().getTipo());
+            }
+        });
+        
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colEndereco.setCellValueFactory(new PropertyValueFactory<>("endereco"));
 //        colStatus.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Usuario, String>, ObservableValue<String>>() {
 //            @Override
 //            public ObservableValue<String> call(TableColumn.CellDataFeatures<Usuario, String> obj) {
 //                return new SimpleStringProperty(obj.getValue().isAtivo());
-//            }
-//        });
-//        colTipo.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Usuario, String>, ObservableValue<String>>() {
-//            @Override
-//            public ObservableValue<String> call(TableColumn.CellDataFeatures<Usuario, String> obj) {
-//                return new SimpleStringProperty(obj.getValue().getTipoUsuario().getNome());
 //            }
 //        });
 
@@ -357,7 +365,8 @@ public class UsuarioController extends AnchorPane{
      * Limpar campos textfield cadastro de coleções
      */
     private void limpar() {
-        Campo.limpar(txtConfirmarSenha, txtLogin, txtNome, txtSenha, txtEmail);
+        Campo.limpar(txtConfirmarSenha, txtLogin, txtNome, txtSenha, txtEmail,txtCep,txtEndereco,txtConfirmarSenha,txtCpf);
+        cbTipoUsuario.setValue("");
     }
 
 	public UsuarioFacade getUsuarioFacade() {

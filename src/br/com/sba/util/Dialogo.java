@@ -110,7 +110,7 @@ public class Dialogo {
         });
         yes.getStyleClass().add("bt-sim");
 
-        Button no = new Button("NÃƒO");
+        Button no = new Button("NÃO");
         no.setOnAction((ActionEvent e) -> {
             dialogo.close();
             resposta = Resposta.NO;
@@ -151,7 +151,7 @@ public class Dialogo {
      */
     public static void boxDialogo(AnchorPane pane) {
         Scene scene = new Scene(pane);
-        scene.getStylesheets().add("br/com/museuid/css/dialog.css");
+        scene.getStylesheets().add("br/com/sba/css/dialog.css");
         scene.setFill(Color.TRANSPARENT);
 
         dialogo = new Dialog(new Stage(), scene);
