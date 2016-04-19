@@ -10,8 +10,6 @@ import javax.persistence.NoResultException;
 
 import br.com.sba.facade.UsuarioFacade;
 import br.com.sba.model.TipoUsuario;
-//import br.com.museuid.banco.controle.ControleDAO;
-//import br.com.museuid.model.TipoUsuario;
 import br.com.sba.model.Usuario;
 import br.com.sba.util.Campo;
 import br.com.sba.util.Combo;
@@ -136,19 +134,19 @@ public class UsuarioController extends AnchorPane{
     @FXML
     private Label legenda;
     
-    public UsuarioController() throws IOException{
-       // try {
+    public UsuarioController(){
+        try {
             FXMLLoader fxml = new FXMLLoader(getClass().getResource("/br/com/sba/view/usuario.fxml"));
 
             fxml.setRoot(this);
             fxml.setController(this);
             fxml.load();
 
-//        }
-//        catch (IOException ex) {
-//            Mensagem.erro("Erro ao carregar tela do usuário! \n" + ex); 
-//
-//        }
+        }
+        catch (IOException ex) {
+            Mensagem.erro("Erro ao carregar tela do usuário! \n" + ex); 
+
+        }
     }
     
     @FXML
