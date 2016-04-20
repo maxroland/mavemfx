@@ -1,14 +1,14 @@
 package br.com.sba.util;
 
 /**
- * Utilitários de Strings
+ * Utilitarios de Strings
  */
 public class StringUtils {
 
 	/**
-	 * Verifica se a String é vazia ou composta apenas por espaços em branco
+	 * Verifica se a String a vazia ou composta apenas por espaaos em branco
 	 * @param str String a ser verificada
-	 * @return true se vazia; false caso contrário
+	 * @return true se vazia; false caso contrario
 	 */
 	public static final boolean isEmpty(String str) {
 		if (str == null) {

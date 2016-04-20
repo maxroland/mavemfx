@@ -20,6 +20,7 @@ import br.com.sba.util.Grupo;
 import br.com.sba.util.Mensagem;
 import br.com.sba.util.Modulo;
 import br.com.sba.util.Nota;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -31,10 +32,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Cell;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.SingleSelectionModel;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -93,8 +98,8 @@ public class UsuarioController extends AnchorPane{
     private TextField txtCpf;
 
     @FXML
-    private ComboBox<String> cbTipoUsuario;
-
+    private ComboBox<TipoUsuario> cbTipo;
+    
     @FXML
     private AnchorPane telaEdicao;
 
@@ -134,7 +139,7 @@ public class UsuarioController extends AnchorPane{
     @FXML
     private Label legenda;
     
-    public UsuarioController(){
+    public UsuarioController() throws IOException{
         try {
             FXMLLoader fxml = new FXMLLoader(getClass().getResource("/br/com/sba/view/usuario.fxml"));
 
@@ -144,7 +149,7 @@ public class UsuarioController extends AnchorPane{
 
         }
         catch (IOException ex) {
-            Mensagem.erro("Erro ao carregar tela do usuário! \n" + ex); 
+            Mensagem.erro("Erro ao carregar tela do usuario! \n" + ex); 
 
         }
     }
@@ -156,7 +161,6 @@ public class UsuarioController extends AnchorPane{
         Grupo.notEmpty(menu);
         sincronizarBase();
         combos();
-
         txtPesquisar.textProperty().addListener((obs, old, novo) -> {
             filtro(novo, FXCollections.observableArrayList(listaUsuarios));
         });
@@ -164,14 +168,14 @@ public class UsuarioController extends AnchorPane{
     
     @FXML
     void telaCadastro(ActionEvent event) {
-        config("Cadastrar Usuário", "Campos obrigatórios", 0);
+        config("Cadastrar Usuario", "Campos obrigatarios", 0);
         Modulo.visualizacao(true, telaCadastro, btSalvar);
         limpar();
     }
 
     @FXML
     void telaEdicao(ActionEvent event) {
-        config("Editar Usuário", "Quantidade de usuários encontrados", 1);
+        config("Editar Usuario", "Quantidade de usuarios encontrados", 1);
         Modulo.visualizacao(true, telaEdicao, btEditar, txtPesquisar);
         sincronizarBase();
         tabela();
@@ -179,7 +183,7 @@ public class UsuarioController extends AnchorPane{
 
     @FXML
     void telaExcluir(ActionEvent event) {
-        config("Excluir Usuário", "Quantidade de usuários encontrados", 2);
+        config("Excluir Usuario", "Quantidade de usuarios encontrados", 2);
         Modulo.visualizacao(true, telaEdicao, btExcluir, txtPesquisar);
         tabela();
     }
@@ -197,27 +201,28 @@ public class UsuarioController extends AnchorPane{
         String senha = txtSenha.getText();
         usuario.setEndereco(txtEndereco.getText());
         usuario.setCep(txtCep.getText());
-        usuario.setTipo(cbTipoUsuario.getValue());
+        usuario.setTipo(cbTipo.getSelectionModel().getSelectedIndex());
         if (vazio ) {
            Mensagem.info("Preencher campos vazios!");
 //        } else if (!senha.equals(confirmar)) {
-//            Mensagem.info("Senha inválida, verifique se senhas são iguais!");
+//            Mensagem.info("Senha invalida, verifique se senhas sao iguais!");
 //        } else if (usuarioFacade.hasLogin(usuario.getLogin())) {
-//            Nota.alerta("Login já cadastrado na base de dados!");
+//            Nota.alerta("Login ja cadastrado na base de dados!");
         } else {
             Usuario user = new Usuario(idUsuario, usuario.getNome(), usuario.getCpf(),usuario.getEmail(),usuario.getLogin(), senha,//Criptografia.converter(senha), 
             							usuario.getEndereco(), usuario.getCep(),usuario.getTipo());
 
             if (idUsuario == 0) {
                 usuarioFacade.createUsuario(user);
-                Mensagem.info("Usuário cadastrado com sucesso!");
+                Mensagem.info("Usuario cadastrado com sucesso!");
             } else {
                 usuarioFacade.updateUsuario(user);
-                Mensagem.info("Usuário atualizado com sucesso!");
+                Mensagem.info("Usuario atualizado com sucesso!");
             }
             resetUsuario();
             telaCadastro(null);
             sincronizarBase();
+            limpar();
         }
     }
 
@@ -235,15 +240,15 @@ public class UsuarioController extends AnchorPane{
             txtEmail.setText(user.getEmail());
             txtSenha.setText("");
             txtEndereco.setText(user.getEndereco());
-            cbTipoUsuario.setValue(user.getTipo());
+            cbTipo.getSelectionModel().select(user.getTipo());
             txtConfirmarSenha.setText("");
-            lbTitulo.setText("Editar Usuário");
+            lbTitulo.setText("Editar Usuario");
             menu.selectToggle(menu.getToggles().get(1));
 
             idUsuario = user.getIdusuario();
 
         } catch (NullPointerException ex) {
-            Nota.alerta("Selecione um usuário na tabela para edição!");
+            Nota.alerta("Selecione um usuario na tabela para ediaao!");
         }
     }
 
@@ -252,7 +257,7 @@ public class UsuarioController extends AnchorPane{
         try {
             Usuario usuario = tbUsuario.getSelectionModel().getSelectedItem();
 
-            Dialogo.Resposta response = Mensagem.confirmar("Excluir usuário " + usuario.getNome() + " ?");
+            Dialogo.Resposta response = Mensagem.confirmar("Excluir usuario " + usuario.getNome() + " ?");
 
             if (response == Dialogo.Resposta.YES) {
             	getUsuarioFacade().deleteUsuario(usuario);
@@ -263,7 +268,7 @@ public class UsuarioController extends AnchorPane{
             tbUsuario.getSelectionModel().clearSelection();
 
         } catch (NullPointerException ex) {
-            Mensagem.alerta("Selecione usuário na tabela para exclusão!");
+            Mensagem.alerta("Selecione usuario na tabela para exclusao!");
         }
     }
 
@@ -274,12 +279,12 @@ public class UsuarioController extends AnchorPane{
      */
     private void combos() {
         Combo.popular(cbStatus, "Ativo", "Inativo");
-        Combo.popular(cbTipoUsuario, "Administrador", "Leitor");
-//        Combo.popular(cbPermissaoUsuario, ControleDAO.getBanco().getUsuarioDAO().usuariosTipo());
+        cbTipo.setPromptText("--selecione--");
+        cbTipo.getItems().setAll(TipoUsuario.values());
     }
 
     /**
-     * Configurações de tela, titulos e exibição de telas e menus
+     * Configuraaaes de tela, titulos e exibiaao de telas e menus
      */
     private void config(String tituloTela, String mensagem, int grupoMenu) {
         lbTitulo.setText(tituloTela);
@@ -300,7 +305,7 @@ public class UsuarioController extends AnchorPane{
     }
 
     /**
-     * Mapear dados objetos para inserção dos dados na tabela
+     * Mapear dados objetos para inseraao dos dados na tabela
      */
     private void tabela() {
 
@@ -309,14 +314,14 @@ public class UsuarioController extends AnchorPane{
         colId.setCellValueFactory(new PropertyValueFactory<>("idusuario"));
         colLogin.setCellValueFactory(new PropertyValueFactory<>("login"));
         colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        //colTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
-        colTipo.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Usuario, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Usuario, String> obj) {
-                return new SimpleStringProperty(obj.getValue().getTipo());
-            }
-        });
-        
+        colTipo.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Usuario,String>, ObservableValue<String>>() {
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Usuario, String> obj) {
+				int indexTipo = obj.getValue().getTipo();
+				TipoUsuario valueTipo = TipoUsuario.values()[indexTipo];
+				return new SimpleStringProperty(valueTipo.toString());
+			}
+		});
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colEndereco.setCellValueFactory(new PropertyValueFactory<>("endereco"));
 //        colStatus.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Usuario, String>, ObservableValue<String>>() {
@@ -354,17 +359,17 @@ public class UsuarioController extends AnchorPane{
 
         SortedList<Usuario> dadosOrdenados = new SortedList<>(dadosFiltrados);
         dadosOrdenados.comparatorProperty().bind(tbUsuario.comparatorProperty());
-        Filtro.mensagem(legenda, dadosOrdenados.size(), "Quantidade de usuários encontradas");
+        Filtro.mensagem(legenda, dadosOrdenados.size(), "Quantidade de usuarios encontradas");
 
         tbUsuario.setItems(dadosOrdenados);
     }
 
     /**
-     * Limpar campos textfield cadastro de coleções
+     * Limpar campos textfield cadastro de coleaaes
      */
     private void limpar() {
         Campo.limpar(txtConfirmarSenha, txtLogin, txtNome, txtSenha, txtEmail,txtCep,txtEndereco,txtConfirmarSenha,txtCpf);
-        cbTipoUsuario.setValue("");
+        cbTipo.setPromptText("--selecione--");
     }
 
 	public UsuarioFacade getUsuarioFacade() {

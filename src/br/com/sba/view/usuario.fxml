@@ -128,7 +128,7 @@
             <TextField fx:id="txtEndereco" prefHeight="35.0" prefWidth="182.0" styleClass="campo-texto" GridPane.columnSpan="2" GridPane.rowIndex="5" />
             <TextField fx:id="txtCep" prefHeight="35.0" prefWidth="182.0" styleClass="campo-texto" GridPane.columnIndex="2" GridPane.rowIndex="5" />
             <TextField fx:id="txtCpf" prefHeight="35.0" prefWidth="182.0" styleClass="campo-texto" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <ComboBox fx:id="cbTipoUsuario" prefHeight="34.0" prefWidth="464.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <ComboBox fx:id="cbTipo" prefHeight="34.0" prefWidth="464.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
             </children>
         </GridPane>
         <AnchorPane fx:id="telaEdicao" visible="false" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">

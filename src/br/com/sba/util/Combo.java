@@ -47,6 +47,6 @@ public class Combo {
      */
     private static void limpar(ComboBox<Object> combo) {
         combo.getItems().clear();
-        combo.setPromptText("-- Registros não encontrados --");
+        combo.setPromptText("-- Registros nao encontrados --");
     }
 }

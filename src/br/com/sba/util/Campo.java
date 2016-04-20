@@ -9,7 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 /**
- * Utilitario para formatação e verificação de campos de textos, labels e textareas
+ * Utilitario para formatacco e verificacco de campos de textos, labels e textareas
  */
 public class Campo {
 
@@ -17,7 +17,7 @@ public class Campo {
     }
 
     /**
-     * Não permitir que campos de textos com valores nulos
+     * Nco permitir que campos de textos com valores nulos
      */
     public static boolean noEmpty(TextField... field) {
 
@@ -75,7 +75,7 @@ public class Campo {
     }
 
     /**
-     * Ao clicar no campo voltar ao estilo padrão do campo
+     * Ao clicar no campo voltar ao estilo padrco do campo
      */
     private static void origem(Node no) {
         no.setOnMouseClicked((MouseEvent me) -> {
@@ -84,7 +84,7 @@ public class Campo {
     }
 
     /**
-     * Exibir erro campo no login caso deixe espaço vazio ou incorreto
+     * Exibir erro campo no login caso deixe espaco vazio ou incorreto
      */
     public static void erroLogin(Node no) {
         no.setStyle("-fx-border-color: #ff8b8b;");

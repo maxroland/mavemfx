@@ -2,7 +2,6 @@ package br.com.sba;
 	
 import java.io.IOException;
 
-import br.com.sba.view.login.LoginApp;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -16,15 +15,15 @@ import javafx.stage.Stage;
 
 public class AppolodorusApp extends LoginApp{
 	
-    //public static Stage palco; //não utilizar após remoção do método start
+    //public static Stage palco; 
     private static Scene cena;
-    private static AnchorPane page; //não utilizar após remoção do método start
+    private static AnchorPane page;
 
     private Screen screen = Screen.getPrimary();
     private Rectangle2D windows = screen.getVisualBounds();
 	
     public AppolodorusApp(){
-    	palco = new Stage(); //não utilizar após remoção do método start
+    	palco = new Stage(); 
         palco.setX(windows.getMinX());
         palco.setY(windows.getMinY());
         palco.setWidth(windows.getWidth());
@@ -38,7 +37,7 @@ public class AppolodorusApp extends LoginApp{
         palco.show();
 	}
 	
-  //método padrão start ficará apenas na tela de login por questões de segurança linha posteriormente será retirada da aplicação
+  
     @Override 
 	public void start(Stage stage) throws IOException{
         page = FXMLLoader.load(getClass().getResource("/br/com/sba/view/app/app.fxml"));
@@ -55,7 +54,7 @@ public class AppolodorusApp extends LoginApp{
 	}
 	
 	
-	//Instrução será retirada posteriormente aplicação terá apenas 1 modo de acesso start
+	//Instruï¿½ï¿½o serï¿½ retirada posteriormente aplicaï¿½ï¿½o terï¿½ apenas 1 modo de acesso start
 	public static void main(String[] args) {
 		launch(args);
 	}

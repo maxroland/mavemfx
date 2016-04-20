@@ -71,4 +71,5 @@ public class UsuarioFacade implements Serializable{
 		}
 		return false;
 	}
+	
 }

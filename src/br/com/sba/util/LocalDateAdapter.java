@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
- * Adaptador (para JAXB) para converter entre LocalDate e representação String 
+ * Adaptador (para JAXB) para converter entre LocalDate e representacao String 
  * ISO 8601 da data como '2012-12-03'.
  * 
  * @author Marco Jakob

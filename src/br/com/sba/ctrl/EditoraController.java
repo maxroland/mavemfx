@@ -48,7 +48,7 @@ public class EditoraController implements Initializable {
 	}
 	
 	// Event Listener on Button[#onDone].onAction
-	//Confirmar alteração ou inclusão
+
 	@FXML
 	public void onDone(ActionEvent event) {
 		if(!editmode){

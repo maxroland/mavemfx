@@ -3,7 +3,7 @@ package br.com.sba.util;
 import br.com.sba.util.Dialogo.Resposta;
 
 /**
- * Criação de mensagem apartir do classe de dialogo
+ * Criacao de mensagem apartir do classe de dialogo
  */
 public class Mensagem {
 
@@ -11,7 +11,7 @@ public class Mensagem {
     }
 
     public static void info(String mensagem) {
-        Dialogo.mensagens("INFO", "Informação", mensagem);
+        Dialogo.mensagens("INFO", "Informacao", mensagem);
     }
 
     public static void info(String mensagem, String titulo) {

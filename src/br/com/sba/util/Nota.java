@@ -1,6 +1,6 @@
 package br.com.sba.util;
 
-import br.com.museuid.view.app.AppController;
+//import br.com.museuid.view.app.AppController;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -9,7 +9,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 /**
- * Criar Notas informativas, simplicação sistema de mensagem
+ * Criar Notas informativas, simplicaaao sistema de mensagem
  */
 public class Nota {
 
@@ -40,7 +40,7 @@ public class Nota {
     }
 
     /**
-     * Adicionar ação fechar nota
+     * Adicionar aaao fechar nota
      */
     private static Button close(VBox box, HBox nota) {
 
@@ -93,18 +93,18 @@ public class Nota {
     }
 
     public static void alerta(String mensagem) {
-        nota(AppController.getInstance().boxNotas(), mensagem, "ALERTA");
+//        nota(Appo.getInstance().boxNotas(), mensagem, "ALERTA");
     }
 
     public static void info(String mensagem) {
-        nota(AppController.getInstance().boxNotas(), mensagem, "INFO");
+//        nota(AppController.getInstance().boxNotas(), mensagem, "INFO");
     }
 
     public static void erro(String mensagem) {
-        nota(AppController.getInstance().boxNotas(), mensagem, "ERRO");
+//        nota(AppController.getInstance().boxNotas(), mensagem, "ERRO");
     }
 
     public static void confirma(String mensagem) {
-        nota(AppController.getInstance().boxNotas(), mensagem, "CONFIRMAR");
+//        nota(AppController.getInstance().boxNotas(), mensagem, "CONFIRMAR");
     }
 }

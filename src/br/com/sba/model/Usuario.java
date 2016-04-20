@@ -1,5 +1,4 @@
 package br.com.sba.model;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,8 +10,6 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-
-
 
 /**
  * The persistent class for the usuario database table.
@@ -41,7 +38,7 @@ public class Usuario{
 
 	private StringProperty senha = new SimpleStringProperty();
 	
-	private StringProperty tipo = new SimpleStringProperty();
+	private IntegerProperty tipo = new SimpleIntegerProperty();
 
 	public Usuario() {
 	}
@@ -53,7 +50,7 @@ public class Usuario{
 
 	public Usuario(int idusuario,String nome,String cpf, 
 				   String email,String login,String senha,
-				   String endereco,String cep,String tipo) {
+				   String endereco,String cep,int tipo) {
 		this.idusuario = new SimpleIntegerProperty(idusuario);
 		this.cep = new SimpleStringProperty(cep);
 		this.cpf = new SimpleStringProperty(cpf);
@@ -62,7 +59,7 @@ public class Usuario{
 		this.login = new SimpleStringProperty(login);
 		this.nome = new SimpleStringProperty(nome);
 		this.senha = new SimpleStringProperty(senha);
-		this.tipo = new SimpleStringProperty(tipo);
+		this.tipo = new SimpleIntegerProperty(tipo);
 	}
 
 
@@ -186,25 +183,27 @@ public class Usuario{
 		this.senhaProperty().set(senha);
 	}
 	
-	
-	public StringProperty tipoProperty() {
+	public IntegerProperty tipoProperty() {
 		return this.tipo;
 	}
+	
 
+	public int getTipo() {
+		return this.tipoProperty().get();
+	}
+	
+
+	public void setTipo(final int tipo) {
+		this.tipoProperty().set(tipo);
+	}
+		
 //	@ObjectTypeConverter(name = "tipo", objectType = TipoUsuario.class, dataType = String.class, conversionValues = {
 //			@ConversionValue(objectValue = "Administrador", dataValue = "0"),
 //			@ConversionValue(objectValue = "Leitor", dataValue = "1") })	
 //	@Basic
 //	@Convert("tipo")
 //	@Enumerated(EnumType.ORDINAL)
-	public String getTipo() {
-		return this.tipoProperty().get();
-	}
-	
 
-	public void setTipo(final String tipo) {
-		this.tipoProperty().set(tipo);
-	}
 
 	
 	/**
@@ -242,6 +241,8 @@ public class Usuario{
 	public String toString() {
 		return loginProperty().get();
 	}
+
+
 
 
 	

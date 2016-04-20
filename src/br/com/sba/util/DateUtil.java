@@ -9,14 +9,14 @@ import java.util.Locale;
 
 public class DateUtil {
 
-	  /** O padrão usado para conversão. Mude como quiser. */
+	  /** O padrao usado para conversao. Mude como quiser. */
     private static final String DATE_PATTERN = "dd/MM/yyyy";
 
     /** O formatador de data. */
     private static final DateTimeFormatter DATE_FORMATTER = 
             DateTimeFormatter.ofPattern(DATE_PATTERN);
     
-    //Localização Brasil para objetos 
+    //Localizaaao Brasil para objetos 
     private static final  Locale ptBr = new Locale("pt","BR");
     
     //Formato de data para objeto listar meses
@@ -24,7 +24,7 @@ public class DateUtil {
     
     /**
      * Retorna os dados como String formatado. O 
-     * {@link DateUtil#DATE_PATTERN}  (padrão de data) que é utilizado.
+     * {@link DateUtil#DATE_PATTERN}  (padrao de data) que a utilizado.
      * 
      * @param date A data a ser retornada como String
      * @return String formadado
@@ -40,10 +40,10 @@ public class DateUtil {
      * Converte um String no formato definido {@link DateUtil#DATE_PATTERN} 
      * para um objeto {@link LocalDate}.
      * 
-     * Retorna null se o String não puder se convertido.
+     * Retorna null se o String nao puder se convertido.
      * 
      * @param dateString a data como String
-     * @return o objeto data ou null se não puder ser convertido
+     * @return o objeto data ou null se nao puder ser convertido
      */
     public static LocalDate parse(String dateString) {
         try {
@@ -54,10 +54,10 @@ public class DateUtil {
     }
 
     /**
-     * Checa se o String é uma data válida.
+     * Checa se o String a uma data valida.
      * 
      * @param dateString A data como String
-     * @return true se o String é uma data válida
+     * @return true se o String a uma data valida
      */
     public static boolean validDate(String dateString) {
         // Tenta converter o String.

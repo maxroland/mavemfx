@@ -110,7 +110,7 @@ public class Dialogo {
         });
         yes.getStyleClass().add("bt-sim");
 
-        Button no = new Button("NÃO");
+        Button no = new Button("NAO");
         no.setOnAction((ActionEvent e) -> {
             dialogo.close();
             resposta = Resposta.NO;

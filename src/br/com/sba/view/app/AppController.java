@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 import br.com.sba.util.Animacao;
 import br.com.sba.util.Modulo;
 import br.com.sba.AppolodorusApp;
-import br.com.sba.view.login.LoginApp;
+import br.com.sba.LoginApp;
 import br.com.sba.view.login.LoginAppController;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
@@ -276,7 +276,7 @@ public class AppController implements Initializable{
 //        instance = this;
 //        Grupo.notEmpty(grupoMenus, grupoCatalogacao, grupoEmprestimo, grupoLocaliacao, grupoUtilidades, grupoVisitantes);//n√£o permite grupos de menus com menus deselecionados
 //        menuDashboard(null);
-        //lbUser.setText("Ol·, " + LoginAppController.currentUser.getLogin());
+//        lbUser.setText("Ola, " + LoginAppController.currentUser.getLogin());
 	}
     public AnchorPane fadeAnimate(String url) throws IOException {
         AnchorPane v = (AnchorPane) FXMLLoader.load(getClass().getResource(url));

@@ -29,8 +29,8 @@ import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 
 /**
- * Principal classe para controle e carregamento dos modulos da aplicação,
- * cada menu e alguns submenus da aplicação representa um modulo na aplicação
+ * Principal classe para controle e carregamento dos modulos da aplicaaao,
+ * cada menu e alguns submenus da aplicao representa um modulo na aplicaaao
  */
 public class Modulo {
 
@@ -182,7 +182,7 @@ public class Modulo {
 //    }
 
     /**
-     * Configuração da tela de conteúdo para limpar painel e adicionar nova
+     * Configuraaao da tela de conteado para limpar painel e adicionar nova
      * tela, redimensionado seu tamanho para preencher a tela
      */
     public static void config(AnchorPane box, AnchorPane conteudo) {
@@ -192,7 +192,7 @@ public class Modulo {
     }
 
     /**
-     * Auxiliar na visualização de elementos da tela como: subenus, subtelas e
+     * Auxiliar na visualizaaao de elementos da tela como: subenus, subtelas e
      * etc...
      */
     public static void visualizacao(boolean valor, Node... no) {

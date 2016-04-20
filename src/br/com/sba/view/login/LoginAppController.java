@@ -45,7 +45,7 @@ public class LoginAppController{
 				new AppolodorusApp().startByParent(parent);			
 	        }
 			
-			lblErroLogin.setText("Login inválido!");
+			lblErroLogin.setText("Login invalido!");
 		}
 	}
 
@@ -76,7 +76,7 @@ public class LoginAppController{
 	private void showValidationErrorAccess(String message) {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Erro de Acesso");
-		alert.setHeaderText("Campos obrigatórios não preenchidos!");
+		alert.setHeaderText("Campos obrigatarios nao preenchidos!");
 		alert.setContentText(message);
 		alert.showAndWait();
 	}

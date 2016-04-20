@@ -1,7 +1,5 @@
 package br.com.sba.dao;
-/* Autor: Hérbet Coelho 
- * Aplicação Web Completa Tomcat JSF Primefaces JPA Hibernate
- * http://uaihebert.com/aplicacao-web-completa-tomcat-jsf-primefaces-jpa-hibernate/*/
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +11,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
-//Método genérico que utilizará uma classe DAO contendo o parâmetro da consulta que é detalhada na superclasse
+
 public abstract class GenericDAO<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
