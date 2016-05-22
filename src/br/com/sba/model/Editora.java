@@ -1,9 +1,15 @@
 package br.com.sba.model;
 
-import javax.persistence.*;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Transient;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -13,82 +19,57 @@ import javafx.beans.property.StringProperty;
  * 
  */
 @Entity
-@NamedQuery(name="Editora.findAll", query="SELECT e FROM Editora e")
+@Access(AccessType.FIELD) //mixed mode property
+@NamedQuery(name="Editora.findByName", query="SELECT e FROM Editora e WHERE e.nome = :nome ")
 public class Editora  {
 
-	private IntegerProperty ideditora =  new SimpleIntegerProperty();
-
-	private StringProperty nomeeditora = new SimpleStringProperty();
+	public static final String FIND_BY_NAME = "Editora.findByName";
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@Column(name="ideditora")	
+	private int id;
+	@Transient
+	private StringProperty nome = new SimpleStringProperty();
 
 	public Editora() {
 	}
 
-	public Editora(int ideditora, String nomeeditora) {
-		this.ideditora = new SimpleIntegerProperty(ideditora);
-		this.nomeeditora = new SimpleStringProperty(nomeeditora);
+	public Editora(int id, String nome) {
+		this.id = id;
+		this.nome = new SimpleStringProperty(nome);
 	}
 
-	public IntegerProperty ideditoraProperty() {
-		return this.ideditora;
-	}
-	
-	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
-	public int getIdeditora() {
-		return this.ideditoraProperty().get();
+
+	public int getId() {
+		return id;
 	}
 	
 
-	public void setIdeditora(final int ideditora) {
-		this.ideditoraProperty().set(ideditora);
+	public void setId(int id) {
+		this.id=id;
 	}
 	
 
-	public StringProperty nomeeditoraProperty() {
-		return this.nomeeditora;
+	public StringProperty nomeProperty() {
+		return this.nome;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	public String getNome() {
+		return this.nomeProperty().get();
 	}
 	
 
-	public String getNomeeditora() {
-		return this.nomeeditoraProperty().get();
+	public void setNome(final String nome) {
+		this.nomeProperty().set(nome);
 	}
-	
 
-	public void setNomeeditora(final String nomeeditora) {
-		this.nomeeditoraProperty().set(nomeeditora);
-	}
-	
-	
-	/**
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((ideditora == null) ? 0 : ideditora.hashCode());
-		return result;
+	public String toString() {
+		return nome.get();
 	}
-
-	/**
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Editora other = (Editora) obj;
-		if (ideditora == null) {
-			if (other.ideditora != null)
-				return false;
-		} else if (!ideditora.equals(other.ideditora))
-			return false;
-		return true;
-	}		
+		
 	
 
 }

@@ -3,7 +3,6 @@ package br.com.sba.dao;
 import java.util.HashMap;
 import java.util.Map;
 
-
 import br.com.sba.model.Usuario;
 
 public class UsuarioDAO extends GenericDAO<Usuario> {
@@ -15,7 +14,7 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
 	}
 
 
-    public Usuario findUserByLogin(String login){
+    public Usuario findUserByLogin(String login) {
         Map<String, Object> parameters = new HashMap<String, Object>();
         parameters.put("login", login);     
  
@@ -23,7 +22,7 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
     }
     
 	public void delete(Usuario usuario) {
-		super.delete(usuario.getIdusuario());
+		super.delete(usuario.getId());
 	}
 
 

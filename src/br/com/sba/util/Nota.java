@@ -21,7 +21,8 @@ public class Nota {
     /**
      * Cria a nota e adicionar ao box passado
      */
-    private static void nota(VBox box, String mensagem, String tipo) {
+    @SuppressWarnings("unused")
+	private static void nota(VBox box, String mensagem, String tipo) {
 
         HBox nota = new HBox(label(mensagem, tipo));
         nota.getStylesheets().add("/br/com/sba/css/dialog.css");

@@ -1,10 +1,5 @@
 package br.com.sba.model;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -21,23 +16,15 @@ import javafx.beans.property.StringProperty;
 @NamedQuery(name="Usuario.findByLogin", query="SELECT u FROM Usuario u WHERE u.login = :login ")
 public class Usuario{
 	public static final String FIND_BY_LOGIN = "Usuario.findByLogin";
-
-	private IntegerProperty idusuario =  new SimpleIntegerProperty();
-
-	private StringProperty cep = new SimpleStringProperty();
-
-	private StringProperty cpf = new SimpleStringProperty();
-
-	private StringProperty email = new SimpleStringProperty();
-
-	private StringProperty endereco = new SimpleStringProperty();
-
-	private StringProperty login = new SimpleStringProperty();
-
-	private StringProperty nome = new SimpleStringProperty();
-
-	private StringProperty senha = new SimpleStringProperty();
 	
+	private IntegerProperty id = new SimpleIntegerProperty();
+	private StringProperty cep = new SimpleStringProperty();
+	private StringProperty cpf = new SimpleStringProperty();
+	private StringProperty email = new SimpleStringProperty();
+	private StringProperty endereco = new SimpleStringProperty();
+	private StringProperty login = new SimpleStringProperty();
+	private StringProperty nome = new SimpleStringProperty();
+	private StringProperty senha = new SimpleStringProperty();
 	private IntegerProperty tipo = new SimpleIntegerProperty();
 
 	public Usuario() {
@@ -48,10 +35,10 @@ public class Usuario{
 		this.senha = new SimpleStringProperty(senha);
 	}
 
-	public Usuario(int idusuario,String nome,String cpf, 
+	public Usuario(int id,String nome,String cpf, 
 				   String email,String login,String senha,
 				   String endereco,String cep,int tipo) {
-		this.idusuario = new SimpleIntegerProperty(idusuario);
+		this.id = new SimpleIntegerProperty(id);
 		this.cep = new SimpleStringProperty(cep);
 		this.cpf = new SimpleStringProperty(cpf);
 		this.email = new SimpleStringProperty(email);
@@ -63,21 +50,21 @@ public class Usuario{
 	}
 
 
-	public IntegerProperty idusuarioProperty() {
-		return this.idusuario;
-	}
-	
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE)
-	public int getIdusuario() {
-		return this.idusuarioProperty().get();
+	@Column(name="idusuario")	
+	public int getId() {
+		return this.idProperty().get();
 	}
 	
 
-	public void setIdusuario(final int idusuario) {
-		this.idusuarioProperty().set(idusuario);
+	public void setId(final int id) {
+		this.idProperty().set(id);
 	}
-	
+
+	public IntegerProperty idProperty() {
+		return this.id;
+	}	
 
 	public StringProperty cepProperty() {
 		return this.cep;
@@ -149,7 +136,7 @@ public class Usuario{
 	}
 	
 
-	public void setLogin(final String login) {
+	public void setLogin(String login) {
 		this.loginProperty().set(login);
 	}
 	
@@ -196,51 +183,13 @@ public class Usuario{
 	public void setTipo(final int tipo) {
 		this.tipoProperty().set(tipo);
 	}
-		
-//	@ObjectTypeConverter(name = "tipo", objectType = TipoUsuario.class, dataType = String.class, conversionValues = {
-//			@ConversionValue(objectValue = "Administrador", dataValue = "0"),
-//			@ConversionValue(objectValue = "Leitor", dataValue = "1") })	
-//	@Basic
-//	@Convert("tipo")
-//	@Enumerated(EnumType.ORDINAL)
 
 
 	
-	/**
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((idusuario == null) ? 0 : idusuario.hashCode());
-		return result;
-	}
 
-	/**
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Usuario other = (Usuario) obj;
-		if (idusuario == null) {
-			if (other.idusuario != null)
-				return false;
-		} else if (!idusuario.equals(other.idusuario))
-			return false;
-		return true;
-	}
+		
 
-	@Override
-	public String toString() {
-		return loginProperty().get();
-	}
+
 
 
 

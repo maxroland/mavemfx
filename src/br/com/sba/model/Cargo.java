@@ -13,50 +13,51 @@ import javafx.beans.property.StringProperty;
  * 
  */
 @Entity
+@Table(name="cargo")
 @NamedQuery(name="Cargo.findAll", query="SELECT c FROM Cargo c")
 public class Cargo  {
 
 
-	private IntegerProperty idcargo= new SimpleIntegerProperty();
-
-	private StringProperty nomecargo = new SimpleStringProperty();
+	private IntegerProperty id = new SimpleIntegerProperty();
+	private StringProperty nome = new SimpleStringProperty();
 
 	public Cargo() {
 	}
 
-	public Cargo(int idcargo, String nomecargo) {
-		this.idcargo = new SimpleIntegerProperty(idcargo);
-		this.nomecargo = new SimpleStringProperty(nomecargo);
+	public Cargo(int id, String nome) {
+		this.id = new SimpleIntegerProperty(id);
+		this.nome = new SimpleStringProperty(nome);
 	}
 
-	public IntegerProperty idcargoProperty() {
-		return this.idcargo;
+	public IntegerProperty idProperty() {
+		return this.id;
 	}
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	public int getIdcargo() {
-		return this.idcargoProperty().get();
+	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@Column(name="idcargo")
+	public int getId() {
+		return this.idProperty().get();
 	}
 	
 
-	public void setIdcargo(final int idcargo) {
-		this.idcargoProperty().set(idcargo);
+	public void setId(final int id) {
+		this.idProperty().set(id);
 	}
 	
 
-	public StringProperty nomecargoProperty() {
-		return this.nomecargo;
+	public StringProperty nomeProperty() {
+		return this.nome;
 	}
 	
 
-	public String getNomecargo() {
-		return this.nomecargoProperty().get();
+	public String getNome() {
+		return this.nomeProperty().get();
 	}
 	
 
-	public void setNomecargo(final String nomecargo) {
-		this.nomecargoProperty().set(nomecargo);
+	public void setNome(final String nome) {
+		this.nomeProperty().set(nome);
 	}
 
 }

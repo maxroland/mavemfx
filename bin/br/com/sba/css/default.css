@@ -589,8 +589,8 @@
 }
 
 .table-view *.column-drag-header {
-    -fx-background-color: #96c440;
-    -fx-border-color: #96c440;
+    -fx-background-color: #00a1f1;
+    -fx-border-color: #00a1f1;
     -fx-opacity: 0.6px;
 }
 
@@ -614,7 +614,7 @@
 
 .table-row-cell:even:selected {
     -fx-background: -fx-control-inner-background;
-    -fx-background-color: #d7e3a8 transparent, #ebf4c7;
+    -fx-background-color: #c8eeff transparent, #c8eeff;
     -fx-background-insets: 0px, 1px 0px 1px 0px;
 }
 
@@ -636,7 +636,7 @@
 
 .table-row-cell:odd:selected {
     -fx-background: -fx-control-inner-background;
-    -fx-background-color: #d7e3a8 transparent, #ebf4c7;
+    -fx-background-color: #c8eeff transparent, #c8eeff;
     -fx-background-insets: 0px, 1px 0px 1px 0px;
     -fx-text-fill: black;
 }

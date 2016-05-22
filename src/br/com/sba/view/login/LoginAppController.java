@@ -5,6 +5,7 @@ import java.io.IOException;
 import br.com.sba.AppolodorusApp;
 import br.com.sba.facade.UsuarioFacade;
 import br.com.sba.model.Usuario;
+import br.com.sba.util.Campo;
 import br.com.sba.util.StringUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,29 +29,47 @@ public class LoginAppController{
 	@FXML
 	private Button btnEntrar;
 	
-	public static Usuario currentUser=null;
+	private Usuario usuario;
 	
+	private UsuarioFacade usuarioFacade;
+	
+	public static String login;
 	
 	@FXML
-	public void doLogin(ActionEvent event ) throws IOException{
-		currentUser = new Usuario(txtLogin.getText(), pwdSenha.getText());
+	private void initialize(){
+		txtLogin.textProperty().addListener((observable, oldValue, newValue) -> {
+		    lblErroLogin.setText("");
+		});
+		pwdSenha.textProperty().addListener((observable, oldValue, newValue) -> {
+		    lblErroLogin.setText("");
+		});
+	}
+	
+	@FXML
+	public void doLogin(ActionEvent event ) throws IOException {
+		setUsuario(new Usuario(txtLogin.getText(), pwdSenha.getText()));
+		
 		if(validateInput()){
-			UsuarioFacade usuarioFacade = new UsuarioFacade();
-			currentUser =  usuarioFacade.isValidLogin(currentUser.getLogin(), currentUser.getSenha());
-				
-			if(currentUser != null){
-				//Passa a responsabilidade do Palco pelo objeto Parent a classe Appolodorus
-				((Node) (event.getSource())).getScene().getWindow().hide();
-				Parent parent = FXMLLoader.load(getClass().getResource("/br/com/sba/view/app/app.fxml"));
-				new AppolodorusApp().startByParent(parent);			
-	        }
-			
-			lblErroLogin.setText("Login invalido!");
+//			try{
+				Usuario user = getUsuarioFacade().isValidLogin(usuario.getLogin(), usuario.getSenha());
+				if(user!=null){
+					login = usuario.getLogin();
+					//Passa a responsabilidade do Palco através do objeto Parent a classe AppolodorusApp					
+					((Node) (event.getSource())).getScene().getWindow().hide();
+					Parent parent = FXMLLoader.load(getClass().getResource("/br/com/sba/view/app/app.fxml"));
+					new AppolodorusApp().startByParent(parent);
+		        }				
+				lblErroLogin.setText("Login inválido!");
+				Campo.erroLogin(txtLogin);
+//			}catch(Exception e){
+//				lblErroLogin.setText("Falha na Conexão com Banco de Dados!");
+//			}
 		}
 	}
 
 	
 	public boolean validateInput(){
+		lblErroLogin.setText("");
 		String errorMessage = validateForm();
 		if (!errorMessage.isEmpty()) {
 			showValidationErrorAccess(errorMessage);
@@ -62,11 +81,11 @@ public class LoginAppController{
 	private String validateForm() {
 		StringBuilder errorMessage = new StringBuilder();
 
-		if (StringUtils.isEmpty(currentUser.getLogin())) {
+		if (StringUtils.isEmpty(usuario.getLogin())) {
 			errorMessage.append("Preencha o login").append(StringUtils.newLine());
 		}
 
-		if (StringUtils.isEmpty(currentUser.getSenha())) {
+		if (StringUtils.isEmpty(usuario.getSenha())) {
 			errorMessage.append("Preencha a senha").append(StringUtils.newLine());
 		}
 
@@ -76,9 +95,32 @@ public class LoginAppController{
 	private void showValidationErrorAccess(String message) {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Erro de Acesso");
-		alert.setHeaderText("Campos obrigatarios nao preenchidos!");
+		alert.setHeaderText("Campos obrigatórios não preenchidos!");
 		alert.setContentText(message);
 		alert.showAndWait();
 	}
+
+	public UsuarioFacade getUsuarioFacade() {
+		if(usuarioFacade ==null){
+			usuarioFacade = new UsuarioFacade();
+		}
+		return usuarioFacade;
+	}
+	
+	public Usuario getUsuario() {
+		if (usuario == null) {
+			usuario = new Usuario();
+		}
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public void resetUsuario() {
+		usuario = new Usuario();
+	}
+	
 
 }

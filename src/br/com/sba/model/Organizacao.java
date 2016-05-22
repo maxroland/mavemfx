@@ -1,89 +1,117 @@
 package br.com.sba.model;
 
+
 import javax.persistence.*;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 /**
  * The persistent class for the biblioteca database table.
  * 
  */
 @Entity
-@NamedQuery(name="Biblioteca.findAll", query="SELECT b FROM Biblioteca b")
-public class Biblioteca  {
+@Table(name = "biblioteca")
+//Query Eclipselink é construída com base na classe Organização
+@NamedQuery(name = "Organizacao.findByCnpj", query = "SELECT b FROM Organizacao b WHERE b.cnpj = :cnpj ")
+public class Organizacao {
+	public static final String FIND_BY_CNPJ = "Organizacao.findByCnpj";
+
+	private IntegerProperty id = new SimpleIntegerProperty();
+	private StringProperty nome = new SimpleStringProperty();
+	private StringProperty razaoSocial = new SimpleStringProperty();
+	private StringProperty cnpj = new SimpleStringProperty();
+	private StringProperty endereco = new SimpleStringProperty();
+	private StringProperty cep = new SimpleStringProperty();
+
+	public Organizacao() {}
+
+	public Organizacao(int id, String nome, String razaoSocial, String cnpj, String endereco, String cep) {
+		this.id = new SimpleIntegerProperty(id);
+		this.nome = new SimpleStringProperty(nome);
+		this.razaoSocial = new SimpleStringProperty(razaoSocial);
+		this.cnpj = new SimpleStringProperty(cnpj);
+		this.endereco = new SimpleStringProperty(endereco);
+		this.cep = new SimpleStringProperty(cep);
+
+	}
+
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int idbiblioteca;
-
-	private String cep;
-
-	private String cnpj;
-
-	private String estado;
-
-	private String nome;
-
-	private String razaoSocial;
-
-	private String rua;
-
-	public Biblioteca() {
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name = "idbiblioteca")
+	public int getId() {
+		return this.idProperty().get();
 	}
 
-	public int getIdbiblioteca() {
-		return this.idbiblioteca;
+	public void setId(final int id) {
+		this.idProperty().set(id);
 	}
 
-	public void setIdbiblioteca(int idbiblioteca) {
-		this.idbiblioteca = idbiblioteca;
+	public IntegerProperty idProperty() {
+		return this.id;
 	}
-
-	public String getCep() {
+	
+	public StringProperty cepProperty() {
 		return this.cep;
 	}
 
-	public void setCep(String cep) {
-		this.cep = cep;
+	public String getCep() {
+		return this.cepProperty().get();
 	}
 
-	public String getCnpj() {
+	public void setCep(final String cep) {
+		this.cepProperty().set(cep);
+	}
+
+	public StringProperty cnpjProperty() {
 		return this.cnpj;
 	}
 
-	public void setCnpj(String cnpj) {
-		this.cnpj = cnpj;
+	public String getCnpj() {
+		return this.cnpjProperty().get();
 	}
 
-	public String getEstado() {
-		return this.estado;
+	public void setCnpj(final String cnpj) {
+		this.cnpjProperty().set(cnpj);
 	}
 
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-
-	public String getNome() {
+	public StringProperty nomeProperty() {
 		return this.nome;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public String getNome() {
+		return this.nomeProperty().get();
 	}
 
-	public String getRazaoSocial() {
+	public void setNome(final String nome) {
+		this.nomeProperty().set(nome);
+	}
+
+	public StringProperty razaoSocialProperty() {
 		return this.razaoSocial;
 	}
 
-	public void setRazaoSocial(String razaoSocial) {
-		this.razaoSocial = razaoSocial;
+	public String getRazaoSocial() {
+		return this.razaoSocialProperty().get();
 	}
 
-	public String getRua() {
-		return this.rua;
+	public void setRazaoSocial(final String razaoSocial) {
+		this.razaoSocialProperty().set(razaoSocial);
 	}
 
-	public void setRua(String rua) {
-		this.rua = rua;
+	public StringProperty enderecoProperty() {
+		return this.endereco;
+	}
+
+	public String getEndereco() {
+		return this.enderecoProperty().get();
+	}
+
+	public void setEndereco(final String rua) {
+		this.enderecoProperty().set(rua);
 	}
 
 }

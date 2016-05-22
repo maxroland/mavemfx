@@ -5,11 +5,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import br.com.sba.util.Animacao;
-import br.com.sba.util.Modulo;
 import br.com.sba.AppolodorusApp;
 import br.com.sba.LoginApp;
-import br.com.sba.view.login.LoginAppController;
+import br.com.sba.util.Animacao;
+import br.com.sba.util.Grupo;
+import br.com.sba.util.Modulo;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,7 +27,7 @@ import javafx.util.Duration;
 
 public class AppController implements Initializable{
 
-    //private static AppController instance;
+    private static AppController instance;
 
     @FXML
     private AnchorPane boxConteudo;
@@ -38,7 +38,7 @@ public class AppController implements Initializable{
     @FXML
     private VBox boxLocalizacao;
     @FXML
-    private VBox boxUtilitarios;
+    private VBox boxGerenciamento;
     @FXML
     private VBox boxNotas;
     @FXML
@@ -86,7 +86,9 @@ public class AppController implements Initializable{
     @FXML
     private ToggleButton btCatalogacao;
     @FXML
-    private ToggleButton btEstratigrafia;
+    private ToggleButton btEditora;
+    @FXML
+    private ToggleButton btLivro;    
     @FXML
     private ToggleButton btVisitantes;
     @FXML
@@ -100,9 +102,9 @@ public class AppController implements Initializable{
     @FXML
     private ToggleButton btSeguranca;
     @FXML
-    private ToggleGroup grupoLocaliacao;
+    private ToggleGroup grupoLocalizacao;
     @FXML
-    private ToggleGroup grupoUtilidades;
+    private ToggleGroup grupoGerenciamento;
     @FXML
     private ToggleGroup grupoMenus;
     @FXML
@@ -116,9 +118,9 @@ public class AppController implements Initializable{
     /**
      * Obter instancia do controler
      */
-//    public static AppController getInstance() {
-//        return instance;
-//    }
+    public static AppController getInstance() {
+        return instance;
+    }
 
     public void setDataPane(Node node) {
         // Atualiza AnchorPane form(FXML) dependendo do submenu escolhido
@@ -137,7 +139,7 @@ public class AppController implements Initializable{
 
     @FXML
     void menuCatalogacao(ActionEvent event) {
-        submenus(btCatalogacao, boxCatalogacao, btCatalogar, btDesginacao, btEstratigrafia, btColecao);
+        submenus(btCatalogacao, boxCatalogacao,  btEditora, btLivro);
     }
 
     @FXML
@@ -146,8 +148,8 @@ public class AppController implements Initializable{
     }
 
     @FXML
-    void menuUtilitario(ActionEvent event) {
-        submenus(btUtilitarios, boxUtilitarios, btUsuarios);
+    void menuGerenciamento(ActionEvent event) {
+        submenus(btUtilitarios, boxGerenciamento, btUsuarios);
     }
 
     @FXML
@@ -195,64 +197,60 @@ public class AppController implements Initializable{
         //Modulo.getExcursao(boxConteudo);
     }
 
-    @FXML
-    void subCatalogar(ActionEvent event) {
-        //Modulo.getCatalogar(boxConteudo);
-    }
 
     @FXML
     void subDesignacao(ActionEvent event) {
-        //Modulo.getDesignacao(boxConteudo);
+//        Modulo.getDesignacao(boxConteudo);
     }
 
     @FXML
-    void subEstratigrafia(ActionEvent event) {
-//        //Modulo.getEstratigrafia(boxConteudo);
+    void subEditora(ActionEvent event) throws IOException {
+    	Modulo.getEditora(boxConteudo);
     }
 
     @FXML
-    void subColecao(ActionEvent event) {
-//        //Modulo.getColecao(boxConteudo);
+    void subLivro(ActionEvent event) throws IOException {
+    	Modulo.getLivro(boxConteudo);
     }
-
+    
     @FXML
     void subEmprestimo(ActionEvent event) {
-//        //Modulo.getEmprestimo(boxConteudo);
+//        Modulo.getEmprestimo(boxConteudo);
     }
 
     @FXML
     void subItensEmprestimo(ActionEvent event) {
-//        //Modulo.getItensEmprestimo(boxConteudo);
+//        Modulo.getItensEmprestimo(boxConteudo);
     }
 
     @FXML
     void subDevolucaoEmprestimo(ActionEvent event) {
-//        //Modulo.getDevolucao(boxConteudo);
+//        Modulo.getDevolucao(boxConteudo);
     }
 
     @FXML
     void subHistoricoEmprestimo(ActionEvent event) {
-//        //Modulo.getHistorico(boxConteudo);
+//        Modulo.getHistorico(boxConteudo);
     }
 
     @FXML
-    void subOrganizacao(ActionEvent event) {
-//        //Modulo.getOrganizacao(boxConteudo);
+    void subOrganizacao(ActionEvent event) throws IOException {
+        Modulo.getOrganizacao(boxConteudo);
     }
 
     @FXML
     void subSetor(ActionEvent event) {
-//        //Modulo.getSetor(boxConteudo);
+//        Modulo.getSetor(boxConteudo);
     }
 
     @FXML
     void subLocal(ActionEvent event) {
-//        //Modulo.getLocal(boxConteudo);
+//        Modulo.getLocal(boxConteudo);
     }
 
     @FXML
     void subLocalizar(ActionEvent event) {
-//        //Modulo.getLocalizacao(boxConteudo);
+//        Modulo.getLocalizacao(boxConteudo);
     }
 
     @FXML
@@ -273,14 +271,14 @@ public class AppController implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-//        instance = this;
-//        Grupo.notEmpty(grupoMenus, grupoCatalogacao, grupoEmprestimo, grupoLocaliacao, grupoUtilidades, grupoVisitantes);//n√£o permite grupos de menus com menus deselecionados
+        instance = this;
+        Grupo.notEmpty(grupoMenus, grupoCatalogacao,grupoGerenciamento,grupoLocalizacao);//, grupoEmprestimo,   grupoVisitantes);//n√o permite grupos de menus com menus deselecionados
 //        menuDashboard(null);
-//        lbUser.setText("Ola, " + LoginAppController.currentUser.getLogin());
+//          lbUser.setText("Ola, "+LoginAppController.login.toString());
 	}
     public AnchorPane fadeAnimate(String url) throws IOException {
         AnchorPane v = (AnchorPane) FXMLLoader.load(getClass().getResource(url));
-        FadeTransition ft = new FadeTransition(Duration.millis(1500));
+        FadeTransition ft = new FadeTransition(Duration.millis(1000));
         ft.setNode(v);
         ft.setFromValue(0.1);
         ft.setToValue(1);

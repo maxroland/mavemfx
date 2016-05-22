@@ -25,11 +25,8 @@ import javafx.beans.property.StringProperty;
 public class Leitor{
 
 	private IntegerProperty idleitor = new SimpleIntegerProperty();
-
 	private ObjectProperty<LocalDate> dataAssociacao = new SimpleObjectProperty<>();
-
 	private StringProperty status = new SimpleStringProperty();
-
 	private ObjectProperty<Usuario> usuario = new SimpleObjectProperty<>();
 
 	public Leitor() {
@@ -84,7 +81,7 @@ public class Leitor{
 		return this.usuario;
 	}
 	
-	//bi-directional many-to-one association to Usuario1
+	//bi-directional many-to-one association to Usuario
 	@OneToOne
 	@JoinColumn(name="idusuario")
 	public Usuario getUsuario() {

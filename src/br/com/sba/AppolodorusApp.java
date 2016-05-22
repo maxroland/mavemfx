@@ -2,7 +2,6 @@ package br.com.sba;
 	
 import java.io.IOException;
 
-import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
@@ -12,18 +11,17 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-
+//A inicialização da Aplicação e telas se dá somente pelo LoginApp 
 public class AppolodorusApp extends LoginApp{
-	
-    //public static Stage palco; 
     private static Scene cena;
     private static AnchorPane page;
 
     private Screen screen = Screen.getPrimary();
     private Rectangle2D windows = screen.getVisualBounds();
 	
+  //Construtor parametros alteram o tamanho da tela de acordo com a configuração do terminal
     public AppolodorusApp(){
-    	palco = new Stage(); 
+    	palco = new Stage(); //será removido quando retirado main
         palco.setX(windows.getMinX());
         palco.setY(windows.getMinY());
         palco.setWidth(windows.getWidth());
@@ -31,8 +29,9 @@ public class AppolodorusApp extends LoginApp{
         palco.setResizable(true);
     };
     
+    //Recebe cena da tela de login
 	public void startByParent(Parent parent) {
-		cena = new Scene(parent); 
+		cena = new Scene(parent);
         palco.setScene(cena);
         palco.show();
 	}
@@ -54,7 +53,7 @@ public class AppolodorusApp extends LoginApp{
 	}
 	
 	
-	//Instruï¿½ï¿½o serï¿½ retirada posteriormente aplicaï¿½ï¿½o terï¿½ apenas 1 modo de acesso start
+	//Instruçãoo será retirada posteriormente aplicação terá apenas 1 modo de acesso start
 	public static void main(String[] args) {
 		launch(args);
 	}

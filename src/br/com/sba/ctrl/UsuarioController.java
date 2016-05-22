@@ -1,26 +1,19 @@
 package br.com.sba.ctrl;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;
-
-import javax.persistence.NoResultException;
-
 
 import br.com.sba.facade.UsuarioFacade;
 import br.com.sba.model.TipoUsuario;
 import br.com.sba.model.Usuario;
 import br.com.sba.util.Campo;
-import br.com.sba.util.Combo;
 import br.com.sba.util.Criptografia;
 import br.com.sba.util.Dialogo;
 import br.com.sba.util.Filtro;
 import br.com.sba.util.Grupo;
 import br.com.sba.util.Mensagem;
 import br.com.sba.util.Modulo;
-import br.com.sba.util.Nota;
-import javafx.beans.property.SimpleIntegerProperty;
+import br.com.sba.util.ValidationFields;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -30,353 +23,326 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.Cell;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.SingleSelectionModel;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
 
-public class UsuarioController extends AnchorPane{
-    
+public class UsuarioController extends AnchorPane {
+
 	private Usuario usuario;
-    private List<Usuario> listaUsuarios;
-    private UsuarioFacade usuarioFacade;
-    private int idUsuario = 0;
+	private List<Usuario> listaUsuarios;
+	private UsuarioFacade usuarioFacade;
+	private int idUsuario = 0;
 
-    @FXML
-    private Label lbTitulo;
+	@FXML
+	private Label lbTitulo;
 
-    @FXML
-    private TextField txtPesquisar;
+	@FXML
+	private TextField txtPesquisar;
 
-    @FXML
-    private ToggleGroup menu;
+	@FXML
+	private ToggleGroup menu;
 
-    @FXML
-    private GridPane telaCadastro;
+	@FXML
+	private GridPane telaCadastro;
 
-    @FXML
-    private TextField txtNome;
+	@FXML
+	private TextField txtNome;
 
-    @FXML
-    private TextField txtLogin;
+	@FXML
+	private TextField txtLogin;
 
-    @FXML
-    private TextField txtEmail;
+	@FXML
+	private TextField txtEmail;
 
-    @FXML
-    private PasswordField txtSenha;
+	@FXML
+	private PasswordField txtSenha;
 
-    @FXML
-    private PasswordField txtConfirmarSenha;
+	@FXML
+	private PasswordField txtConfirmarSenha;
 
-    @FXML
-    private ComboBox<?> cbStatus;
+	@FXML
+	private ComboBox<?> cbStatus;
 
-    @FXML
-    private ComboBox<?> cbPermissaoUsuario;
+	@FXML
+	private ComboBox<?> cbPermissaoUsuario;
 
-    @FXML
-    private TextField txtEndereco;
+	@FXML
+	private TextField txtEndereco;
 
-    @FXML
-    private TextField txtCep;
+	@FXML
+	private TextField txtCep;
 
-    @FXML
-    private TextField txtCpf;
+	@FXML
+	private TextField txtCpf;
 
-    @FXML
-    private ComboBox<TipoUsuario> cbTipo;
-    
-    @FXML
-    private AnchorPane telaEdicao;
+	@FXML
+	private ComboBox<TipoUsuario> cbTipo;
 
-    @FXML
-    private TableView<Usuario> tbUsuario;
+	@FXML
+	private AnchorPane telaEdicao;
 
-    @FXML
-    private TableColumn<Usuario, Number> colId;
+	@FXML
+	private TableView<Usuario> tbUsuario;
 
-    @FXML
-    private TableColumn<Usuario, String > colNome;
+	@FXML
+	private TableColumn<Usuario, Number> colId;
 
-    @FXML
-    private TableColumn<Usuario, String> colLogin;
+	@FXML
+	private TableColumn<Usuario, String> colNome;
 
-    @FXML
-    private TableColumn<Usuario, String> colEmail;
+	@FXML
+	private TableColumn<Usuario, String> colLogin;
 
-    @FXML
-    private TableColumn<Usuario, String> colTipo;
+	@FXML
+	private TableColumn<Usuario, String> colEmail;
 
-    @FXML
-    private TableColumn<Usuario, String> colEndereco;
+	@FXML
+	private TableColumn<Usuario, String> colTipo;
 
-    @FXML
-    private TableColumn<Usuario, String> colCep;
+	@FXML
+	private TableColumn<Usuario, String> colEndereco;
 
-    @FXML
-    private Button btSalvar;
+	@FXML
+	private TableColumn<Usuario, String> colCep;
 
-    @FXML
-    private Button btEditar;
+	@FXML
+	private Button btSalvar;
 
-    @FXML
-    private Button btExcluir;
+	@FXML
+	private Button btEditar;
 
-    @FXML
-    private Label legenda;
-    
-    public UsuarioController() throws IOException{
-        try {
-            FXMLLoader fxml = new FXMLLoader(getClass().getResource("/br/com/sba/view/usuario.fxml"));
+	@FXML
+	private Button btExcluir;
 
-            fxml.setRoot(this);
-            fxml.setController(this);
-            fxml.load();
+	@FXML
+	private Label legenda;
 
-        }
-        catch (IOException ex) {
-            Mensagem.erro("Erro ao carregar tela do usuario! \n" + ex); 
+	public UsuarioController() {
+		try {
+			FXMLLoader fxml = new FXMLLoader(getClass().getResource("/br/com/sba/view/usuario.fxml"));
 
-        }
-    }
-    
-    @FXML
-    public void initialize() {
-        telaCadastro(null);
+			fxml.setRoot(this);
+			fxml.setController(this);
+			fxml.load();
+		} catch (IOException ex) {
+			Mensagem.erro("Erro ao carregar tela do usuario! \n" + ex);
+		}
+	}
 
-        Grupo.notEmpty(menu);
-        sincronizarBase();
-        combos();
-        txtPesquisar.textProperty().addListener((obs, old, novo) -> {
-            filtro(novo, FXCollections.observableArrayList(listaUsuarios));
-        });
-    }
-    
-    @FXML
-    void telaCadastro(ActionEvent event) {
-        config("Cadastrar Usuario", "Campos obrigatarios", 0);
-        Modulo.visualizacao(true, telaCadastro, btSalvar);
-        limpar();
-    }
+	@FXML
+	public void initialize() {
+		screenRecords(null);
 
-    @FXML
-    void telaEdicao(ActionEvent event) {
-        config("Editar Usuario", "Quantidade de usuarios encontrados", 1);
-        Modulo.visualizacao(true, telaEdicao, btEditar, txtPesquisar);
-        sincronizarBase();
-        tabela();
-    }
-
-    @FXML
-    void telaExcluir(ActionEvent event) {
-        config("Excluir Usuario", "Quantidade de usuarios encontrados", 2);
-        Modulo.visualizacao(true, telaEdicao, btExcluir, txtPesquisar);
-        tabela();
-    }
-
-    @FXML
-    void salvar(ActionEvent event) {
-
-        boolean vazio = Campo.noEmpty(txtNome, txtLogin, txtSenha, txtConfirmarSenha);
-        resetUsuario();
-        usuario.setNome(txtNome.getText());
-        usuario.setCpf(txtCpf.getText());
-        usuario.setEmail(txtEmail.getText());
-        usuario.setLogin(txtLogin.getText().replaceAll(" ", "").trim());
-        String confirmar = txtConfirmarSenha.getText();
-        String senha = txtSenha.getText();
-        usuario.setEndereco(txtEndereco.getText());
-        usuario.setCep(txtCep.getText());
-        usuario.setTipo(cbTipo.getSelectionModel().getSelectedIndex());
-        if (vazio ) {
-           Mensagem.info("Preencher campos vazios!");
-//        } else if (!senha.equals(confirmar)) {
-//            Mensagem.info("Senha invalida, verifique se senhas sao iguais!");
-//        } else if (usuarioFacade.hasLogin(usuario.getLogin())) {
-//            Nota.alerta("Login ja cadastrado na base de dados!");
-        } else {
-            Usuario user = new Usuario(idUsuario, usuario.getNome(), usuario.getCpf(),usuario.getEmail(),usuario.getLogin(), senha,//Criptografia.converter(senha), 
-            							usuario.getEndereco(), usuario.getCep(),usuario.getTipo());
-
-            if (idUsuario == 0) {
-                usuarioFacade.createUsuario(user);
-                Mensagem.info("Usuario cadastrado com sucesso!");
-            } else {
-                usuarioFacade.updateUsuario(user);
-                Mensagem.info("Usuario atualizado com sucesso!");
-            }
-            resetUsuario();
-            telaCadastro(null);
-            sincronizarBase();
-            limpar();
-        }
-    }
-
-    @FXML
-    void editar(ActionEvent event) {
-        try {
-            Usuario user = tbUsuario.getSelectionModel().getSelectedItem();
-            user.getClass();
-
-            telaCadastro(null);
-
-            txtNome.setText(user.getNome());
-            txtCpf.setText(user.getCpf());
-            txtLogin.setText(user.getLogin());
-            txtEmail.setText(user.getEmail());
-            txtSenha.setText("");
-            txtEndereco.setText(user.getEndereco());
-            cbTipo.getSelectionModel().select(user.getTipo());
-            txtConfirmarSenha.setText("");
-            lbTitulo.setText("Editar Usuario");
-            menu.selectToggle(menu.getToggles().get(1));
-
-            idUsuario = user.getIdusuario();
-
-        } catch (NullPointerException ex) {
-            Nota.alerta("Selecione um usuario na tabela para ediaao!");
-        }
-    }
-
-    @FXML
-    void excluir(ActionEvent event) {
-        try {
-            Usuario usuario = tbUsuario.getSelectionModel().getSelectedItem();
-
-            Dialogo.Resposta response = Mensagem.confirmar("Excluir usuario " + usuario.getNome() + " ?");
-
-            if (response == Dialogo.Resposta.YES) {
-            	getUsuarioFacade().deleteUsuario(usuario);
-                sincronizarBase();
-                tabela();
-            }
-
-            tbUsuario.getSelectionModel().clearSelection();
-
-        } catch (NullPointerException ex) {
-            Mensagem.alerta("Selecione usuario na tabela para exclusao!");
-        }
-    }
-
-
-
-    /**
-     * Preencher combos tela
-     */
-    private void combos() {
-        Combo.popular(cbStatus, "Ativo", "Inativo");
-        cbTipo.setPromptText("--selecione--");
-        cbTipo.getItems().setAll(TipoUsuario.values());
-    }
-
-    /**
-     * Configuraaaes de tela, titulos e exibiaao de telas e menus
-     */
-    private void config(String tituloTela, String mensagem, int grupoMenu) {
-        lbTitulo.setText(tituloTela);
-        Modulo.visualizacao(false, btExcluir, btSalvar, btEditar, telaCadastro, telaEdicao, txtPesquisar);
-
-        legenda.setText(mensagem);
-        tbUsuario.getSelectionModel().clearSelection();
-        menu.selectToggle(menu.getToggles().get(grupoMenu));
-
-        idUsuario = 0;
-    }
-
-    /**
-     * Sincronizar dados com banco de dados
-     */
-    private void sincronizarBase() {
-        getAllUsuarios();
-    }
-
-    /**
-     * Mapear dados objetos para inseraao dos dados na tabela
-     */
-    private void tabela() {
-
-        ObservableList<Usuario> data = FXCollections.observableArrayList(listaUsuarios);
-
-        colId.setCellValueFactory(new PropertyValueFactory<>("idusuario"));
-        colLogin.setCellValueFactory(new PropertyValueFactory<>("login"));
-        colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        colTipo.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Usuario,String>, ObservableValue<String>>() {
-			@Override
-			public ObservableValue<String> call(CellDataFeatures<Usuario, String> obj) {
-				int indexTipo = obj.getValue().getTipo();
-				TipoUsuario valueTipo = TipoUsuario.values()[indexTipo];
-				return new SimpleStringProperty(valueTipo.toString());
-			}
+		Grupo.notEmpty(menu);
+		loadData();
+		combos();
+		txtPesquisar.textProperty().addListener((obs, old, novo) -> {
+			filtro(novo, FXCollections.observableArrayList(listaUsuarios));
 		});
-        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-        colEndereco.setCellValueFactory(new PropertyValueFactory<>("endereco"));
-//        colStatus.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Usuario, String>, ObservableValue<String>>() {
-//            @Override
-//            public ObservableValue<String> call(TableColumn.CellDataFeatures<Usuario, String> obj) {
-//                return new SimpleStringProperty(obj.getValue().isAtivo());
-//            }
-//        });
+	}
 
-        tbUsuario.setItems(data);
-    }
+	@FXML
+	void screenRecords(ActionEvent event) {
+		config("Cadastrar Usuario", "Campos obrigatarios", 0);
+		Modulo.visualizacao(true, telaCadastro, btSalvar);
+		toClean();
+	}
 
-    /**
-     * Campo de pesquisar para filtrar dados na tabela
-     */
-    private void filtro(String valor, ObservableList<Usuario> listaUsuario) {
+	@FXML
+	void screenEdition(ActionEvent event) {
+		config("Editar Usuario", "Quantidade de usuarios encontrados", 1);
+		Modulo.visualizacao(true, telaEdicao, btEditar, txtPesquisar);
+		loadData();
+		table();
+	}
 
-        FilteredList<Usuario> dadosFiltrados = new FilteredList<>(listaUsuario, usuario -> true);
-        dadosFiltrados.setPredicate(usuario -> {
+	@FXML
+	void screenDeletion(ActionEvent event) {
+		config("Excluir Usuario", "Quantidade de usuarios encontrados", 2);
+		Modulo.visualizacao(true, telaEdicao, btExcluir, txtPesquisar);
+		table();
+	}
 
-            if (valor == null || valor.isEmpty()) {
-                return true;
-            } else if (usuario.getNome().toLowerCase().startsWith(valor.toLowerCase())) {
-                return true;
-            } else if (usuario.getEmail().toLowerCase().startsWith(valor.toLowerCase())) {
-                return true;
-            } else if (usuario.getLogin().toLowerCase().startsWith(valor.toLowerCase())) {
-                return true;
-//            } else if (usuario.getTipoUsuario().getNome().toLowerCase().startsWith(valor.toLowerCase())) {
-//                return true;
-            }
+	@FXML
+	void onSave(ActionEvent event) {
+		boolean vazio = ValidationFields.checkEmptyFields(txtNome, txtLogin, txtSenha, txtConfirmarSenha, cbTipo);
+		resetUsuario();
+		usuario.setNome(txtNome.getText());
+		usuario.setCpf(txtCpf.getText());
+		usuario.setEmail(txtEmail.getText());
+		usuario.setLogin(txtLogin.getText().replaceAll(" ", "").trim());
+		String confirmar = txtConfirmarSenha.getText();
+		usuario.setSenha(txtSenha.getText());
+		usuario.setEndereco(txtEndereco.getText());
+		usuario.setCep(txtCep.getText());
+		usuario.setTipo(cbTipo.getSelectionModel().getSelectedIndex());
 
-            return false;
-        });
+		if (vazio) {
+			Mensagem.alerta("Preencher campos vazios!");
+		} else if (!usuario.getSenha().equals(confirmar)) {
+			Mensagem.alerta("Confirmação de senha inválida, verifique se senhas informadas são iguais!");
+		} else if (idUsuario == 0 && getUsuarioFacade().hasLogin(usuario.getLogin())) {
+			Mensagem.alerta("Login já cadastrado na base de dados!");
+		} else {
+			setUsuario(new Usuario(idUsuario, usuario.getNome(), usuario.getCpf(), usuario.getEmail(),
+					usuario.getLogin(), Criptografia.converter(confirmar), usuario.getEndereco(), usuario.getCep(),
+					usuario.getTipo()));
+			if (idUsuario == 0) {
+				getUsuarioFacade().createUsuario(getUsuario());
+				Mensagem.info("Usuário cadastrado com sucesso!");
+			} else {
+				getUsuarioFacade().updateUsuario(getUsuario());
+				Mensagem.info("Usuário atualizado com sucesso!");
+			}
+			setUsuario(null);
+			screenRecords(null);
+			loadData();
+			toClean();
+		}
+	}
 
-        SortedList<Usuario> dadosOrdenados = new SortedList<>(dadosFiltrados);
-        dadosOrdenados.comparatorProperty().bind(tbUsuario.comparatorProperty());
-        Filtro.mensagem(legenda, dadosOrdenados.size(), "Quantidade de usuarios encontradas");
+	@FXML
+	void onEdit(ActionEvent event) {
+		try {
+			resetUsuario();
+			setUsuario(tbUsuario.getSelectionModel().getSelectedItem());
 
-        tbUsuario.setItems(dadosOrdenados);
-    }
+			screenRecords(null);
 
-    /**
-     * Limpar campos textfield cadastro de coleaaes
-     */
-    private void limpar() {
-        Campo.limpar(txtConfirmarSenha, txtLogin, txtNome, txtSenha, txtEmail,txtCep,txtEndereco,txtConfirmarSenha,txtCpf);
-        cbTipo.setPromptText("--selecione--");
-    }
+			txtNome.setText(usuario.getNome());
+			txtCpf.setText(usuario.getCpf());
+			txtLogin.setText(usuario.getLogin());
+			txtEmail.setText(usuario.getEmail());
+			txtSenha.setText("");
+			txtConfirmarSenha.setText("");
+			txtEndereco.setText(usuario.getEndereco());
+			cbTipo.getSelectionModel().select(usuario.getTipo());
+
+			lbTitulo.setText("Editar Usuario");
+			menu.selectToggle(menu.getToggles().get(1));
+
+			idUsuario = usuario.getId();
+
+		} catch (NullPointerException ex) {
+			Mensagem.alerta("Selecione um usuario na tabela para edição!");
+		}
+	}
+
+	@FXML
+	void onDelete(ActionEvent event) {
+		try {
+			resetUsuario();
+			setUsuario(tbUsuario.getSelectionModel().getSelectedItem());
+			Dialogo.Resposta response = Mensagem.confirmar("Excluir usuario " + usuario.getNome() + " ?");
+
+			if (response == Dialogo.Resposta.YES) {
+				getUsuarioFacade().deleteUsuario(getUsuario());
+				resetUsuario();
+				loadData();
+				table();
+			}
+			tbUsuario.getSelectionModel().clearSelection();
+		} catch (NullPointerException ex) {
+			Mensagem.alerta("Selecione usuario na tabela para exclusao!");
+		}
+	}
+
+	/**
+	 * Preencher combos tela
+	 */
+	private void combos() {
+		cbTipo.setPromptText("--selecione--");
+		cbTipo.getItems().setAll(TipoUsuario.values());
+	}
+
+	/**
+	 * Configuraaaes de tela, titulos e exibiaao de telas e menus
+	 */
+	private void config(String tituloTela, String mensagem, int grupoMenu) {
+		lbTitulo.setText(tituloTela);
+		Modulo.visualizacao(false, btExcluir, btSalvar, btEditar, telaCadastro, telaEdicao, txtPesquisar);
+
+		legenda.setText(mensagem);
+		tbUsuario.getSelectionModel().clearSelection();
+		menu.selectToggle(menu.getToggles().get(grupoMenu));
+
+		idUsuario = 0;
+	}
+
+	/**
+	 * Mapear dados objetos para inseraao dos dados na tabela
+	 */
+	private void table() {
+
+		ObservableList<Usuario> data = FXCollections.observableArrayList(listaUsuarios);
+		colId.setCellValueFactory(cell -> cell.getValue().idProperty());
+		colLogin.setCellValueFactory(cell -> cell.getValue().loginProperty());
+		colNome.setCellValueFactory(cell -> cell.getValue().nomeProperty());
+		colTipo.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Usuario, String>, ObservableValue<String>>() {
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<Usuario, String> obj) {
+						int indexTipo = obj.getValue().getTipo();
+						TipoUsuario valueTipo = TipoUsuario.values()[indexTipo];
+						return new SimpleStringProperty(valueTipo.toString());
+					}
+				});
+		colEmail.setCellValueFactory(cell -> cell.getValue().emailProperty());
+		colEndereco.setCellValueFactory(cell -> cell.getValue().enderecoProperty());
+
+		tbUsuario.setItems(data);
+	}
+
+	/**
+	 * Campo de pesquisar para filtrar dados na tabela
+	 */
+	private void filtro(String valor, ObservableList<Usuario> listaUsuario) {
+
+		FilteredList<Usuario> dadosFiltrados = new FilteredList<>(listaUsuario, usuario -> true);
+		dadosFiltrados.setPredicate(usuario -> {
+
+			if (valor == null || valor.isEmpty()) {
+				return true;
+			} else if (usuario.getNome().toLowerCase().startsWith(valor.toLowerCase())) {
+				return true;
+			} else if (usuario.getEmail().toLowerCase().startsWith(valor.toLowerCase())) {
+				return true;
+			} else if (usuario.getLogin().toLowerCase().startsWith(valor.toLowerCase())) {
+				return true;
+			}
+
+			return false;
+		});
+
+		SortedList<Usuario> dadosOrdenados = new SortedList<>(dadosFiltrados);
+		dadosOrdenados.comparatorProperty().bind(tbUsuario.comparatorProperty());
+		Filtro.mensagem(legenda, dadosOrdenados.size(), "Quantidade de usuarios encontradas");
+
+		tbUsuario.setItems(dadosOrdenados);
+	}
+
+	/**
+	 * Limpar campos textfield cadastro de coleaaes
+	 */
+	private void toClean() {
+		Campo.limpar(txtLogin, txtNome, txtSenha, txtEmail, txtCep, txtEndereco, txtConfirmarSenha, txtCpf);
+		cbTipo.setPromptText("--selecione--");
+	}
 
 	public UsuarioFacade getUsuarioFacade() {
 		if (usuarioFacade == null) {
 			usuarioFacade = new UsuarioFacade();
 		}
-
 		return usuarioFacade;
 	}
 
@@ -384,7 +350,6 @@ public class UsuarioController extends AnchorPane{
 		if (usuario == null) {
 			usuario = new Usuario();
 		}
-
 		return usuario;
 	}
 
@@ -392,21 +357,15 @@ public class UsuarioController extends AnchorPane{
 		this.usuario = usuario;
 	}
 
-	public List<Usuario> getAllUsuarios() {
-		if (usuario == null) {
-			loadUsuarios();
-		}
-
-		return listaUsuarios ;
-	}
-
-	private void loadUsuarios() {
+	public List<Usuario> loadData() {
+		// if (usuario == null) {
 		listaUsuarios = getUsuarioFacade().listAll();
+		// }
+		return listaUsuarios;
 	}
 
 	public void resetUsuario() {
 		usuario = new Usuario();
 	}
-
 
 }

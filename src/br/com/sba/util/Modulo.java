@@ -2,8 +2,10 @@ package br.com.sba.util;
 
 import java.io.IOException;
 
+import br.com.sba.ctrl.EditoraController;
+import br.com.sba.ctrl.LivroController;
+import br.com.sba.ctrl.OrganizacaoController;
 //import br.com.museuid.controller.CatalogarController;
-//import br.com.museuid.controller.ColecaoController;
 //import br.com.museuid.controller.DashController;
 //import br.com.museuid.controller.DesignacaoController;
 //import br.com.museuid.controller.DevolucaoController;
@@ -17,7 +19,6 @@ import java.io.IOException;
 //import br.com.museuid.controller.LocalController;
 //import br.com.museuid.controller.LocalizacaoController;
 //import br.com.museuid.controller.MovimentacaoController;
-//import br.com.museuid.controller.OrganizacaoController;
 //import br.com.museuid.controller.PesquisarController;
 //import br.com.museuid.controller.RelatorioController;
 //import br.com.museuid.controller.SetorController;
@@ -35,9 +36,8 @@ import javafx.scene.layout.AnchorPane;
 public class Modulo {
 
 //    private static CatalogarController catalogar;
-//    private static ColecaoController colecao;
-//    private static DesignacaoController designacao;
-//    private static EstratigrafiaController estratigrafia;
+   	private static EditoraController editora;
+    private static LivroController livro;
 //
 //    private static VisitanteController visitante;
 //    private static InstituicaoController instituicao;
@@ -48,7 +48,7 @@ public class Modulo {
 //    private static ItensController itens;
 //    private static HistoricoController historico;
 //
-//    private static OrganizacaoController organizacao;
+   	  private static OrganizacaoController organizacao;
 //    private static SetorController setor;
 //    private static LocalController local;
 //    private static LocalizacaoController localizacao;
@@ -67,25 +67,21 @@ public class Modulo {
 
 //    public static void getCatalogar(AnchorPane box) {
 //        catalogar = catalogar == null ? new CatalogarController() : catalogar;
-//        catalogar.sincronizarBase();
-//        catalogar.combo();
 //        config(box, catalogar);
 //    }
-//
-//    public static void getColecao(AnchorPane box) {
-//        colecao = colecao == null ? new ColecaoController() : colecao;
-//        config(box, colecao);
-//    }
-//
-//    public static void getDesignacao(AnchorPane box) {
-//        designacao = designacao == null ? new DesignacaoController() : designacao;
-//        config(box, designacao);
-//    }
-//
-//    public static void getEstratigrafia(AnchorPane box) {
-//        estratigrafia = estratigrafia == null ? new EstratigrafiaController() : estratigrafia;
-//        config(box, estratigrafia);
-//    }
+
+    public static void getEditora(AnchorPane box) throws IOException {
+        editora = editora == null ? new EditoraController() : editora;
+        config(box, editora);
+    }
+
+    
+    public static void getLivro(AnchorPane box) throws IOException {
+        livro = livro == null ? new LivroController() : livro;
+        config(box, livro);
+    }
+
+
 //
 //    public static void getVisitante(AnchorPane box) {
 //        visitante = visitante == null ? new VisitanteController() : visitante;
@@ -128,12 +124,12 @@ public class Modulo {
 //        historico = historico == null ? new HistoricoController() : historico;
 //        config(box, historico);
 //    }
-//
-//    public static void getOrganizacao(AnchorPane box) {
-//        organizacao = organizacao == null ? new OrganizacaoController() : organizacao;
-//        config(box, organizacao);
-//    }
-//
+
+    public static void getOrganizacao(AnchorPane box) throws IOException{
+        organizacao = organizacao == null ? new OrganizacaoController() : organizacao;
+        config(box, organizacao);
+    }
+
 //    public static void getSetor(AnchorPane box) {
 //        setor = setor == null ? new SetorController() : setor;
 //        setor.combos();

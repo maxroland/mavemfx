@@ -5,6 +5,7 @@ import java.util.List;
 
 import br.com.sba.dao.UsuarioDAO;
 import br.com.sba.model.Usuario;
+import br.com.sba.util.Criptografia;
 
 public class UsuarioFacade implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -19,7 +20,7 @@ public class UsuarioFacade implements Serializable{
 
 	public void updateUsuario(Usuario usuario) {
 		usuarioDAO.beginTransaction();
-		Usuario persistedUsuario = usuarioDAO.find(usuario.getIdusuario());
+		Usuario persistedUsuario = usuarioDAO.find(usuario.getId());
 		persistedUsuario.setNome(usuario.getNome());
 		persistedUsuario.setEndereco(usuario.getEndereco());
 		persistedUsuario.setCep(usuario.getCep());
@@ -31,13 +32,14 @@ public class UsuarioFacade implements Serializable{
 		usuarioDAO.commitAndCloseTransaction();
 	}
 
-	public Usuario findUsuario(int usuarioId) {
+	public Usuario findUsuario(int Id) {
 		usuarioDAO.beginTransaction();
-		Usuario usuario = usuarioDAO.find(usuarioId);
+		Usuario usuario = usuarioDAO.find(Id);
 		usuarioDAO.closeTransaction();
 		return usuario;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Usuario> listAll() {
 		usuarioDAO.beginTransaction();
 		List<Usuario> result = usuarioDAO.findAll();
@@ -47,29 +49,31 @@ public class UsuarioFacade implements Serializable{
 
 	public void deleteUsuario(Usuario usuario) {
 		usuarioDAO.beginTransaction();
-		Usuario persistedUsuario = usuarioDAO.findReferenceOnly(usuario.getIdusuario());
+		Usuario persistedUsuario = usuarioDAO.findReferenceOnly(usuario.getId());
 		usuarioDAO.delete(persistedUsuario);
 		usuarioDAO.commitAndCloseTransaction();
+	}
+
+	public boolean hasLogin(String login){
+		usuarioDAO.beginTransaction();
+		Usuario usuario = usuarioDAO.findUserByLogin(login);
+		usuarioDAO.closeTransaction();
+		if(usuario==null){
+			return false;
+		}
+		return true; 
 	}
 	
 	public Usuario isValidLogin(String login, String senha) {
 		usuarioDAO.beginTransaction();
 		Usuario usuario = usuarioDAO.findUserByLogin(login);
-
-		if (usuario == null || !usuario.getSenha().equals(senha)) {
+		usuarioDAO.closeTransaction();
+		if (usuario == null || !usuario.getSenha().equals(Criptografia.converter(senha))) {
 			return null;
 		}
 
 		return usuario;
 	}
 	
-	public boolean hasLogin(String login){
-		usuarioDAO.beginTransaction();
-		Usuario usuario = usuarioDAO.findUserByLogin(login);
-		if(usuario.getLogin().equals(login) ){
-			return true;
-		}
-		return false;
-	}
 	
 }

@@ -3,7 +3,6 @@ package br.com.sba.dao;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -66,7 +65,8 @@ public abstract class GenericDAO<T> implements Serializable {
         em.joinTransaction();
     }
 
-    public GenericDAO(Class entityClass) {
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	public GenericDAO(Class entityClass) {
         this.entityClass = entityClass;
     }
 
@@ -99,8 +99,8 @@ public abstract class GenericDAO<T> implements Serializable {
         return em.createQuery(cq).getResultList();
     }
 
-    @SuppressWarnings("unchecked")
-    protected T findOneResult(String namedQuery, Map parameters) {
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    protected T findOneResult(String namedQuery, Map parameters){
         T result = null;
 
         try {
@@ -110,10 +110,7 @@ public abstract class GenericDAO<T> implements Serializable {
                 populateQueryParameters(query, parameters);
             }
 
-            result = (T) query.getSingleResult();
-
-        } catch (NoResultException e) {
-            System.out.println("No result found for named query: " + namedQuery);
+            result = (T) query.getResultList().stream().findFirst().orElse(null);
         } catch (Exception e) {
             System.out.println("Error while running query: " + e.getMessage());
             e.printStackTrace();
@@ -122,7 +119,7 @@ public abstract class GenericDAO<T> implements Serializable {
         return result;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     protected List findAllResults(String namedQuery, Map parameters) {
         List result = null;
 
@@ -145,7 +142,7 @@ public abstract class GenericDAO<T> implements Serializable {
         return result;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     protected List findAllResultsNQ(String nativeQuery, Map parameters) {
         List result = null;
 
